@@ -21,3 +21,37 @@ body {
   -webkit-font-smoothing: antialiased;
   background-color: #F8F5F0;
 }
+
+/* Modern custom scrollbar styling - completely hiding native scrolling arrow buttons */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F8F5F0; /* Blends with body background */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1; /* Soft grey thumb */
+  border-radius: 9999px;
+  border: 2px solid #F8F5F0; /* Creates breathing room around the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8; /* Darker slate grey thumb on hover */
+}
+
+/* Explicitly disable and hide the scrollbar scroll up/down buttons (arrows) */
+::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Firefox scrollbar styling (Firefox doesn't have scroll buttons by default) */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #F8F5F0;
+}
+

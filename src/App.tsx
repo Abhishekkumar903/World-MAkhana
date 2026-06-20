@@ -465,23 +465,25 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* Hero Media Right */}
+                {/* Hero Image Right */}
                 <div className="lg:col-span-5 relative mt-6 lg:mt-0 flex justify-center">
-                  <div className="relative w-full max-w-md aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-amber-100 bg-white">
+                  <div className="relative w-full max-w-md aspect-[4/3] sm:aspect-square rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-white group hover:shadow-3xl transition-all duration-300">
                     <img 
-                      src="/assets/images/makhana_hero_banner_1781940247903.jpg" 
-                      alt="Premium Jumbo Makhana Bowl" 
-                      className="w-full h-full object-cover"
+                      src="/assets/images/suta_7_makhana_1781947116055.jpg" 
+                      alt="Premium Colossal Jumbo Makhana Bowl" 
+                      className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
+                      referrerPolicy="no-referrer"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
-                    <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end text-white">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+                    <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end text-white animate-fadeIn">
                       <div>
-                        <span className="text-[10px] uppercase tracking-wider text-[#D4AF37] font-semibold">Flagship Quality</span>
-                        <h4 className="font-serif font-bold text-base">Bihar Heritage Selection</h4>
+                        <span className="text-[10px] uppercase tracking-wider text-[#D4AF37] font-bold font-mono">7 Suta Grade</span>
+                        <h4 className="font-serif font-bold text-lg leading-tight">Colossal Jumbo Makhana</h4>
+                        <p className="text-[11px] text-stone-200 font-sans mt-0.5">Handpicked premium culinary gold</p>
                       </div>
                       <button 
                         onClick={() => handleSelectProductFromList(PRODUCTS.find(p => p.id === 'raw-jumbo') || PRODUCTS[0])}
-                        className="px-4 py-1.5 bg-[#2E7D32]/90 hover:bg-[#2E7D32] text-xs font-bold rounded-lg cursor-pointer"
+                        className="px-4 py-2 bg-[#2E7D32]/95 hover:bg-[#2E7D32] hover:text-[#D4AF37] text-white text-xs font-bold rounded-xl shadow-md cursor-pointer transition-colors shrink-0"
                       >
                         See Specs
                       </button>
