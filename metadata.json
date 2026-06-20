@@ -1,0 +1,6 @@
+{
+  "name": "Makhana World",
+  "description": "Premium Makhana from Bihar - Luxury, minimal, and organic fox nuts snacks and wholesale export portal.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
