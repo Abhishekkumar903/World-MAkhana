@@ -28,6 +28,10 @@ export default function App() {
   const [activeView, setActiveView] = useState<string>('home');
   const [aiSearchOpen, setAiSearchOpen] = useState(false);
   const [adminOpen, setAdminOpen] = useState(false);
+
+  useEffect(() => {
+    document.documentElement.classList.remove('dark');
+  }, []);
   
   // Persistent States in localStorage (With lazy init)
   const [cart, setCart] = useState<CartItem[]>(() => {
