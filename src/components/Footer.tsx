@@ -43,14 +43,14 @@ export default function Footer({ onNavigate }: FooterProps) {
             <div className="flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-full overflow-hidden shadow border border-stone-800 bg-stone-900">
                 <img 
-                  src="/assets/images/makhana_world_logo_1781948519020.jpg" 
-                  alt="Makhana World Mascot" 
+                  src="/src/assets/images/farmingo_nuts_logo_1783843254906.jpg" 
+                  alt="Farmingo Nuts Logo" 
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
                 />
               </div>
               <h2 className="font-serif text-lg tracking-wider font-extrabold uppercase text-white">
-                Makhana World
+                Farmingo Nuts
               </h2>
             </div>
             
@@ -63,7 +63,7 @@ export default function Footer({ onNavigate }: FooterProps) {
                 <MapPin className="w-4 h-4 text-[#D4AF37]" /> Sourcing Hub: Phase-2, Plot No. GH-01A, Sector-16 Noida, Greater Noida, Uttar Pradesh 201009
               </span>
               <span className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-[#D4AF37]" /> export@makhanaworld.com
+                <Mail className="w-4 h-4 text-[#D4AF37]" /> export@farmingonuts.com
               </span>
               <span className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-[#D4AF37]" /> WhatsApp Hotline: +91 94302 60869
@@ -71,8 +71,8 @@ export default function Footer({ onNavigate }: FooterProps) {
             </div>
           </div>
 
-          {/* Col 2 Quick Products (2.5 cols) */}
-          <div className="md:col-span-2.5 space-y-4 text-xs font-semibold">
+          {/* Col 2 Quick Products (2 cols) */}
+          <div className="md:col-span-2 space-y-4 text-xs font-semibold">
             <h4 className="text-sm font-serif font-bold text-[#D4AF37] uppercase tracking-wider">Makhana Catalog</h4>
             <div className="flex flex-col gap-2.5 pl-1.5 text-stone-400">
               {['Raw 4 Suta Size', 'Raw 5 Suta Size', 'Raw 6 Suta Selection', 'Colossal Jumbo 7 Suta', 'Gourmet Roasted Herbs', 'Cheddar Cheese Pops', 'Fiery Spicy Peri Peri', 'Festival Combo Sets'].map((item) => (
@@ -88,8 +88,8 @@ export default function Footer({ onNavigate }: FooterProps) {
             </div>
           </div>
 
-          {/* Col 3 Sourcing & Portal Links (2.5 cols) */}
-          <div className="md:col-span-2.5 space-y-4 text-xs font-semibold">
+          {/* Col 3 Sourcing & Portal Links (3 cols) */}
+          <div className="md:col-span-3 space-y-4 text-xs font-semibold">
             <h4 className="text-sm font-serif font-bold text-[#D4AF37] uppercase tracking-wider">Transparent Links</h4>
             <div className="flex flex-col gap-2.5 pl-1.5 text-stone-400">
               {[
@@ -164,7 +164,7 @@ export default function Footer({ onNavigate }: FooterProps) {
           
           <div className="flex items-center gap-1.5">
             <ShieldCheck className="w-4 h-4 text-[#D4AF37]" />
-            <span>© 2026 Makhana World Pvt. Ltd. Sourced ethically in Bihar, India.</span>
+            <span>© 2026 Farmingo Nuts Pvt. Ltd. Sourced ethically in Bihar, India.</span>
           </div>
 
           <div className="flex flex-wrap justify-center gap-3">

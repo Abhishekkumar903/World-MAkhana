@@ -24,6 +24,7 @@ export const PRODUCTS: Product[] = [
     id: 'raw-4-suta',
     name: 'Bihar Selection 4 Suta Raw Makhana',
     category: 'raw',
+    subcategory: 'medium-raw',
     description: 'Supreme-quality, hand-sorted 4 Suta grade raw makhana from the wetlands of Mithila, Bihar.',
     fullDescription: 'Hand-harvested by traditional farmers in Mithila, Bihar, our 4 Suta raw makhana represent standard-grade perfection. These white, puffed kernels are sundried, meticulously scrubbed, and graded, ready for custom home roasting or preparation in traditional puddings and curries.',
     mrp: 320,
@@ -55,6 +56,7 @@ export const PRODUCTS: Product[] = [
     id: 'raw-5-suta',
     name: 'Mithila Gold 5 Suta Raw Makhana',
     category: 'raw',
+    subcategory: 'premium-raw',
     description: 'Premium uniform-sized 5 Suta makhana, optimized for even roasting and crunch.',
     fullDescription: 'Our 5 Suta makhana kernels are selected for their superb visual symmetry and uniform size density. Ideal for roasting brands, gourmet kitchens, and retailers seeking highly consistent crunch, clean sorting, and zero impurities.',
     mrp: 380,
@@ -86,6 +88,7 @@ export const PRODUCTS: Product[] = [
     id: 'raw-6-suta',
     name: 'Royal Heritage 6 Suta Makhana',
     category: 'raw',
+    subcategory: 'organic-raw',
     description: 'Large airy puffed organic kernels, providing unmatched crispness in every bite.',
     fullDescription: 'Royal Heritage 6 Suta is an elite, highly sorted grade of fox nuts. Only 15% of the annual harvest in Bihar qualifies for this specification. Each seed pops into a sprawling, white blossom that absorbs seasonings perfectly while maintaining structural crispness.',
     mrp: 460,
@@ -117,6 +120,7 @@ export const PRODUCTS: Product[] = [
     id: 'raw-jumbo',
     name: 'Colossal Jumbo Handpicked Makhana',
     category: 'raw',
+    subcategory: 'jumbo-raw',
     description: 'Our largest available specification of raw fox nuts. Big, robust, and heavenly.',
     fullDescription: 'Our Colossal Jumbo Makhana is hand-graded in Mithila using traditional sieves to isolate the absolute biggest, dust-free popped lotus seeds. Measuring upwards of 15mm, these offer an exquisite melt-in-your-mouth lightness combined with robust crunch.',
     mrp: 550,
@@ -145,9 +149,132 @@ export const PRODUCTS: Product[] = [
     isTodayDeal: false
   },
   {
+    id: 'roasted-plain-raw',
+    name: 'Slow-Roasted Crisp Plain Makhana',
+    category: 'raw',
+    subcategory: 'roasted-raw',
+    description: 'Crispy oven-baked whole makhana kernels without flavors. Ideal for custom seasoning.',
+    fullDescription: 'Perfectly slow-roasted with a minimal drop of healthy oil to trigger premium crunch. This unseasoned plain roasted variant provides a crisp slate for culinary enthusiasts who love creating their own custom home seasoning combinations.',
+    mrp: 200,
+    price: 159,
+    rating: 4.7,
+    reviewsCount: 65,
+    stockStatus: 'In Stock',
+    images: [
+      '/src/assets/images/classic_makhana_pouch_1783860782473.jpg'
+    ],
+    ingredients: ['Popped Fox Nuts', 'Organic Cold-Pressed Rice Bran Oil (0.5%)'],
+    benefits: ['Zero artificial salt or sugar', '100% allergen-free and clean', 'Ultimate dietary versatility'],
+    nutritionalFacts: {
+      calories: '360 kcal',
+      protein: '9.5g',
+      carbs: '75.0g',
+      fat: '1.2g',
+      fiber: '14.0g',
+      calcium: '64mg',
+      iron: '1.5mg'
+    },
+    weightOptions: ['150g', '300g', '500g'],
+    isBestSeller: false,
+    isTodayDeal: false
+  },
+
+  // --- Gourmet Flavored roasted ---
+  {
+    id: 'roasted-peri-peri',
+    name: 'Fiery Spicy Peri Peri Gourmet Makhana',
+    category: 'roasted',
+    subcategory: 'peri-peri',
+    description: 'Cracking giant fox nuts coated with real African bird-eye chili, garlic powder, and citrus.',
+    fullDescription: 'Our signature hot seller! Slow-convection roasted jumbo makhana seeds misted with organic olive oil and aggressively tossed in an authentic Peri Peri spice mix. Hot, tangy, and absolutely addictive.',
+    mrp: 230,
+    price: 179,
+    rating: 4.9,
+    reviewsCount: 322,
+    stockStatus: 'In Stock',
+    images: [
+      '/src/assets/images/peri_peri_makhana_pouch_1783861321396.jpg'
+    ],
+    ingredients: ['Popped Fox Nuts', 'Extra Virgin Olive Oil', 'Peri Peri Spice Blend', 'Dehydrated Garlic', 'Lemon Dust'],
+    benefits: ['Metabolism boosting capsaicin', 'Rich in plant-based trace minerals', 'No MSG or artificial colors'],
+    nutritionalFacts: {
+      calories: '405 kcal',
+      protein: '8.8g',
+      carbs: '71.5g',
+      fat: '4.5g',
+      fiber: '12.8g',
+      calcium: '61mg',
+      iron: '1.8mg'
+    },
+    weightOptions: ['100g', '250g', '500g'],
+    isBestSeller: true,
+    isTodayDeal: true
+  },
+  {
+    id: 'roasted-cheese',
+    name: 'Creamy Cheddar Cheese Gold Makhana',
+    category: 'roasted',
+    subcategory: 'cheese',
+    description: 'Velvety white cheddar coated colossal kernels providing a rich, savory dairy crunch.',
+    fullDescription: 'Confectioner-grade slow-baked colossal fox nuts loaded with natural dehydrated white cheddar cheese dust and seasoned with mild cracked pepper. A guilt-free replacement for cheesy popcorn or greasy chips.',
+    mrp: 240,
+    price: 189,
+    rating: 4.9,
+    reviewsCount: 245,
+    stockStatus: 'In Stock',
+    images: [
+      '/src/assets/images/cheese_makhana_pouch_1783861925140.jpg'
+    ],
+    ingredients: ['Popped Fox Nuts', 'Cold-Pressed Sunflower Oil', 'Natural Cheddar Cheese Powder', 'Sea Salt', 'Yeast Extract'],
+    benefits: ['High calcium calcium multiplier', 'Kid-friendly healthy clean snacker', 'Rich in essential amino acids'],
+    nutritionalFacts: {
+      calories: '418 kcal',
+      protein: '11.2g',
+      carbs: '69.0g',
+      fat: '5.2g',
+      fiber: '11.5g',
+      calcium: '98mg',
+      iron: '1.4mg'
+    },
+    weightOptions: ['100g', '250g', '500g'],
+    isBestSeller: true,
+    isTodayDeal: false
+  },
+  {
+    id: 'roasted-cream-onion',
+    name: 'Zesty Sour Cream & Onion Makhana',
+    category: 'roasted',
+    subcategory: 'cream-onion',
+    description: 'Cool chives and natural sour cream blended perfectly over crispy slow-roasted kernels.',
+    fullDescription: 'Our Sour Cream & Onion Makhana features high-grade organic fox nuts tossed with buttermilk solids, dry sweet onions, and chopped fresh chives. It is smooth, slightly sweet, and tangy, giving you a chip-like experience without the heavy starch load.',
+    mrp: 220,
+    price: 179,
+    rating: 4.7,
+    reviewsCount: 112,
+    stockStatus: 'In Stock',
+    images: [
+      '/assets/images/suta_4_makhana_1781947059850.jpg'
+    ],
+    ingredients: ['Popped Fox Nuts', 'Rice Bran Oil', 'Buttermilk Powder', 'Onion Powder', 'Dehydrated Chives', 'Lactic Acid'],
+    benefits: ['Naturally low fat content', 'Great source of healthy dietary fibers', 'Prebiotic-friendly seasonings'],
+    nutritionalFacts: {
+      calories: '402 kcal',
+      protein: '9.2g',
+      carbs: '73.0g',
+      fat: '4.0g',
+      fiber: '12.5g',
+      calcium: '72mg',
+      iron: '1.6mg'
+    },
+    weightOptions: ['100g', '250g', '500g'],
+    isBestSeller: false,
+    isTodayDeal: false
+  },
+  {
     id: 'roasted-pudina-mint',
     name: 'Gourmet Pudina Mint Herb Makhana',
     category: 'roasted',
+    subcategory: 'pudina-mint',
     description: 'Crisp green-coated makhana with fresh field mint leaves, rock salt, and lemon zest.',
     fullDescription: 'Cool, tangy, and incredibly refreshing! Our Gourmet Pudina Mint Makhana is roasted in olive oil and tumbled with high-grade dehydrated garden mint powder, black salt, and a splash of sour lime. A glorious refreshing bite.',
     mrp: 220,
@@ -156,7 +283,7 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 142,
     stockStatus: 'In Stock',
     images: [
-      '/assets/images/pudina_makhana_mint_1781940314398.jpg'
+      '/src/assets/images/mint_makhana_pouch_1783862500660.jpg'
     ],
     ingredients: ['Popped Fox Nuts', 'Rice Bran Oil', 'Dried Mint Leaves Powder', 'Lemon Peel Powder', 'Black Salt'],
     benefits: ['Aromatic refreshing taste', 'Low-fat high-fiber digestives', 'Rich in natural organic iron'],
@@ -173,13 +300,224 @@ export const PRODUCTS: Product[] = [
     isBestSeller: true,
     isTodayDeal: false
   },
-
+  {
+    id: 'roasted-tomato-tangy',
+    name: 'Tangy Tomato Sun-Ripened Makhana',
+    category: 'roasted',
+    subcategory: 'tomato-tangy',
+    description: 'Vibrant sun-ripened tomato solids combined with rich sweet basil and hot spices.',
+    fullDescription: 'Our Tangy Tomato makhana is a crowd pleaser. Air-popped large kernels are treated with rich, cold-pressed tomato pulp dust, sweet basil, dry ginger powder, and a hint of raw brown sugarcane juice solids. Tangy, zesty, and juicy in aroma.',
+    mrp: 220,
+    price: 169,
+    rating: 4.8,
+    reviewsCount: 154,
+    stockStatus: 'In Stock',
+    images: [
+      '/assets/images/suta_4_makhana_1781947059850.jpg'
+    ],
+    ingredients: ['Popped Fox Nuts', 'Cold-Pressed Sunflower Oil', 'Tomato Powder', 'Sweet Basil Extract', 'Spices'],
+    benefits: ['Rich in lycopene antioxidants', 'Vitamins A & C source', 'Naturally low calories'],
+    nutritionalFacts: {
+      calories: '398 kcal',
+      protein: '8.7g',
+      carbs: '74.2g',
+      fat: '3.9g',
+      fiber: '13.2g',
+      calcium: '59mg',
+      iron: '1.8mg'
+    },
+    weightOptions: ['100g', '250g', '500g'],
+    isBestSeller: false,
+    isTodayDeal: false
+  },
+  {
+    id: 'roasted-black-pepper',
+    name: 'Cracked Black Pepper & Sea Salt Makhana',
+    category: 'roasted',
+    subcategory: 'black-pepper',
+    description: 'Crisp whole kernels coated in freshly crushed Malabar black peppercorns and refined sea salt.',
+    fullDescription: 'An elegant, minimal recipe showcasing classic spice. Slow-roasted in woodfired ovens and misted with premium cold-pressed olive oil, these kernels are heavily peppered with hand-crushed Malabar black peppercorns and pink sea salt flakes.',
+    mrp: 210,
+    price: 159,
+    rating: 4.9,
+    reviewsCount: 167,
+    stockStatus: 'In Stock',
+    images: [
+      '/assets/images/suta_4_makhana_1781947059850.jpg'
+    ],
+    ingredients: ['Popped Fox Nuts', 'Olive Oil', 'Cracked Black Pepper', 'Sea Salt Flakes', 'Dry Ginger'],
+    benefits: ['Supports digestion and fat burning', 'Anti-inflammatory pepper piperine', 'Zero processed synthetic chemicals'],
+    nutritionalFacts: {
+      calories: '388 kcal',
+      protein: '9.4g',
+      carbs: '74.0g',
+      fat: '3.1g',
+      fiber: '14.1g',
+      calcium: '65mg',
+      iron: '1.7mg'
+    },
+    weightOptions: ['100g', '250g', '500g'],
+    isBestSeller: false,
+    isTodayDeal: false
+  },
+  {
+    id: 'roasted-pink-salt',
+    name: 'Himalayan Pink Salt Slow-Baked Makhana',
+    category: 'roasted',
+    subcategory: 'pink-salt',
+    description: 'Pure colossal makhana gently roasted in healthy olive oil and sprinkled with organic pink salt.',
+    fullDescription: 'Simplicity meets purity. Premium 6 Suta fox nuts roasted in cold-pressed virgin olive oil and seasoned strictly with premium unrefined Himalayan pink salt crystals. Highly mineralized, low-sodium, and completely clean.',
+    mrp: 190,
+    price: 149,
+    rating: 4.9,
+    reviewsCount: 202,
+    stockStatus: 'In Stock',
+    images: [
+      '/src/assets/images/himalayan_makhana_pouch_1783861060681.jpg'
+    ],
+    ingredients: ['Popped Fox Nuts', 'Virgin Olive Oil (1.5%)', 'Himalayan Pink Salt Crystals'],
+    benefits: ['Extremely low sodium mineralized profile', 'Perfect keto and diabetic breakfast snack', 'Clean detox diet snacker'],
+    nutritionalFacts: {
+      calories: '378 kcal',
+      protein: '9.6g',
+      carbs: '74.5g',
+      fat: '2.5g',
+      fiber: '14.5g',
+      calcium: '68mg',
+      iron: '1.6mg'
+    },
+    weightOptions: ['100g', '250g', '500g'],
+    isBestSeller: true,
+    isTodayDeal: false
+  },
+  {
+    id: 'roasted-chilli-garlic',
+    name: 'Spiced Chilli Garlic Convection Makhana',
+    category: 'roasted',
+    subcategory: 'chilli-garlic',
+    description: 'Spicy roasted fox nuts treated with raw crushed garlic essence and red Guntur chili powder.',
+    fullDescription: 'A bold, garlic-rich recipe. Giant makhana seeds are baked dry and misted with chili-infused oil, then tossed in an aromatic blend of roasted garlic cloves powder and dried red chili flakes. Warm, savory, and extremely aromatic.',
+    mrp: 230,
+    price: 179,
+    rating: 4.8,
+    reviewsCount: 119,
+    stockStatus: 'In Stock',
+    images: [
+      '/assets/images/suta_6_makhana_1781947102519.jpg'
+    ],
+    ingredients: ['Popped Fox Nuts', 'Rice Bran Oil', 'Roasted Garlic Powder', 'Guntur Red Chilli', 'Onion Dust', 'Chaat Masala'],
+    benefits: ['Garlic allicin cardiac booster', 'Immune supportive spices', 'Low carbohydrate snacking'],
+    nutritionalFacts: {
+      calories: '408 kcal',
+      protein: '9.0g',
+      carbs: '71.9g',
+      fat: '4.8g',
+      fiber: '12.4g',
+      calcium: '60mg',
+      iron: '1.9mg'
+    },
+    weightOptions: ['100g', '250g', '500g'],
+    isBestSeller: false,
+    isTodayDeal: false
+  },
+  {
+    id: 'roasted-barbecue',
+    name: 'Smoky Barbecue Roasted Crunch Makhana',
+    category: 'roasted',
+    subcategory: 'barbecue',
+    description: 'Crispy whole makhana coated in a sweet, smoky, and wood-fired BBQ spice seasoning.',
+    fullDescription: 'Bring on the cookout vibes! Our Smoky Barbecue Makhana is seasoned with a proprietary sweet and smokey barbecue rub, blending dry honey solids, smoked paprika, onion pulp dust, and a mild natural applewood smoke aroma.',
+    mrp: 240,
+    price: 189,
+    rating: 4.7,
+    reviewsCount: 98,
+    stockStatus: 'In Stock',
+    images: [
+      '/assets/images/suta_4_makhana_1781947059850.jpg'
+    ],
+    ingredients: ['Popped Fox Nuts', 'Olive Oil', 'Smoked Paprika', 'BBQ Seasoning', 'Honey Solids', 'Natural Smoke Flavor'],
+    benefits: ['Unique savory-sweet profile', '100% cholesterol-free', 'Rich in phosphorus and magnesium'],
+    nutritionalFacts: {
+      calories: '412 kcal',
+      protein: '8.9g',
+      carbs: '72.8g',
+      fat: '4.2g',
+      fiber: '12.0g',
+      calcium: '58mg',
+      iron: '1.7mg'
+    },
+    weightOptions: ['100g', '250g', '500g'],
+    isBestSeller: false,
+    isTodayDeal: false
+  },
+  {
+    id: 'roasted-masala-mix',
+    name: 'Traditional Spicy Masala Mix Makhana',
+    category: 'roasted',
+    subcategory: 'masala-mix',
+    description: 'An authentic street-style Indian spice mix featuring cumin, coriander, mango powder, and clove.',
+    fullDescription: 'The classic Indian snack reinvented. We coat massive crispy fox nuts in an authentic roasted garam masala spice blend, balanced with amchur (dry mango powder) for a mouthwatering sour punch and a pinch of black mineral rock salt.',
+    mrp: 210,
+    price: 169,
+    rating: 4.9,
+    reviewsCount: 289,
+    stockStatus: 'In Stock',
+    images: [
+      '/assets/images/suta_4_makhana_1781947059850.jpg'
+    ],
+    ingredients: ['Popped Fox Nuts', 'A2 Cow Ghee (0.8%)', 'Spicy Masala Seasoning (Amchur, Cumin, Clove, Cardamom, Salt)'],
+    benefits: ['Boosts metabolic thermogenesis', 'Satiating classic street-style flavor', 'Rich in natural antioxidants'],
+    nutritionalFacts: {
+      calories: '399 kcal',
+      protein: '9.3g',
+      carbs: '73.4g',
+      fat: '3.6g',
+      fiber: '13.5g',
+      calcium: '63mg',
+      iron: '1.9mg'
+    },
+    weightOptions: ['100g', '250g', '500g', '1kg'],
+    isBestSeller: true,
+    isTodayDeal: false
+  },
+  {
+    id: 'roasted-combo-pack',
+    name: 'Premium Combo Pack (4 x 100g)',
+    category: 'roasted',
+    subcategory: 'masala-mix',
+    description: 'A luxurious assortment of our finest gourmet roasted makhana flavors: Peri Peri, Cheddar Cheese, Pudina Mint, and Himalayan Pink Salt.',
+    fullDescription: 'Experience the ultimate tasting journey with our Premium Combo Pack. Contains four individually fresh-sealed 100g pouches of our most loved variants: Fiery Spicy Peri Peri, Creamy Cheddar Cheese, Gourmet Pudina Mint, and Himalayan Pink Salt. Perfect for family snacking, fitness enthusiasts, and elegant gifting.',
+    mrp: 999,
+    price: 799,
+    rating: 4.9,
+    reviewsCount: 382,
+    stockStatus: 'In Stock',
+    images: [
+      '/src/assets/images/combo_makhana_pouch_1783862785114.jpg'
+    ],
+    sutaSize: 'Combo Pack',
+    ingredients: ['Genuine Popped Fox Nuts', 'Extra Virgin Olive Oil', 'Buttermilk solids', 'Real Spices & Seasonings'],
+    benefits: ['Four distinct gourmet flavors in one pack', 'Freshness-sealed individual packs', 'Ideal gift option for health-conscious loved ones'],
+    nutritionalFacts: {
+      calories: '408 kcal',
+      protein: '10.1g',
+      carbs: '71.5g',
+      fat: '4.2g',
+      fiber: '12.8g',
+      calcium: '82mg',
+      iron: '1.7mg'
+    },
+    weightOptions: ['4 x 100g Pack'],
+    isBestSeller: true,
+    isTodayDeal: true
+  },
 
   // --- Bulk Packs ---
   {
     id: 'bulk-commercial-6-suta',
     name: 'Wholesale Standard Commercial Load 6 Suta',
     category: 'bulk-export',
+    subcategory: 'organic-raw',
     description: 'Bulk packed 6 Suta raw makhana inside multi-layer export moisture-proof woven sacks.',
     fullDescription: 'A wholesale-first product designed for food processors, bulk packers, global importers, and private labels. Includes high purity, machine-cleaned, moisture-tested 6 Suta raw makhana seeds packed in 5kg or 10kg heavy-duty woven polypropylene bags to retain freshness under long journeys.',
     mrp: 4200,
@@ -304,7 +642,7 @@ export const BLOGS: BlogArticle[] = [
     id: 'bihar-farming-journey',
     title: 'From Muddy Ponds to Premium Jars: The Ancient Mithila Harvest',
     excerpt: 'Trace the incredible manual labor, ecological resilience, and wood-fired thermal cracking that brings Makhana from Bihar to global dining tables.',
-    content: 'Nearly 90% of the world’s makhana crop originates from Bihar, specifically the Mithila region. The journey of these white crispy seeds is one of the most labor-intensive agricultural processes on Earth, relying on traditional skills passed down through generations.\n\n### Harvesting Under the Water\nThe seeds of Euryale Ferox (the purple-blossoming fox lotus) grow at the muddy bottom of deep marshy ponds. In October, skilled harvesters wade into chest-deep waters, sweep the floor with bamboo screens (called "Gaanj"), and gather the dark, gravel-like seeds from the silt.\n\n### The Sun Drying & Grade Sorting\nOnce gathered, the black seeds are scrubbed thoroughly to wash off the slimy outer mud layers. They are sun-dried on traditional jute bags. The dried seeds are then manually graded through iron sieves—sorting them into "Sutas" (1 to 7) based on size density.\n\n### The Thermal Climax: Roasting and Wooden Cracking\nTo pop the seeds, they are roasted in dry earthen pots over manual wood fires in batches. When heated to a strict thermal temperature, the hard black shell is placed on a wooden board and struck with a heavy wooden mallet ("Thapi"). Instantly, the kernel pops open with a gunshot sound, shedding its black hull and transforming into a snowy-white, airy puffed makhana shell. This is immediately bagged to prevent moisture re-absorption. At Makhana World, we buy directly from these farmers, guaranteeing clean fair-wage income and pure organic crop standards.',
+    content: 'Nearly 90% of the world’s makhana crop originates from Bihar, specifically the Mithila region. The journey of these white crispy seeds is one of the most labor-intensive agricultural processes on Earth, relying on traditional skills passed down through generations.\n\n### Harvesting Under the Water\nThe seeds of Euryale Ferox (the purple-blossoming fox lotus) grow at the muddy bottom of deep marshy ponds. In October, skilled harvesters wade into chest-deep waters, sweep the floor with bamboo screens (called "Gaanj"), and gather the dark, gravel-like seeds from the silt.\n\n### The Sun Drying & Grade Sorting\nOnce gathered, the black seeds are scrubbed thoroughly to wash off the slimy outer mud layers. They are sun-dried on traditional jute bags. The dried seeds are then manually graded through iron sieves—sorting them into "Sutas" (1 to 7) based on size density.\n\n### The Thermal Climax: Roasting and Wooden Cracking\nTo pop the seeds, they are roasted in dry earthen pots over manual wood fires in batches. When heated to a strict thermal temperature, the hard black shell is placed on a wooden board and struck with a heavy wooden mallet ("Thapi"). Instantly, the kernel pops open with a gunshot sound, shedding its black hull and transforming into a snowy-white, airy puffed makhana shell. This is immediately bagged to prevent moisture re-absorption. At Farmingo Nuts, we buy directly from these farmers, guaranteeing clean fair-wage income and pure organic crop standards.',
     image: '/assets/images/makhana_pond_harvest_1781940339830.jpg',
     author: 'Amitabh Mishra, Rural Sourcing Lead',
     date: 'May 28, 2026',
@@ -368,7 +706,7 @@ export const FAQS = [
   },
   {
     question: 'Do you offer bulk volumes for white label, OEM or export?',
-    answer: 'Yes, Makhana World is an established direct exporter from Bihar. We support wholesale container-load shipping, private label packaging, and custom OEM manufacturing for gourmet brands worldwide. We provide official FSSAI, Phytosanitary, and Organic Certifications for international shipping.'
+    answer: 'Yes, Farmingo Nuts is an established direct exporter from Bihar. We support wholesale container-load shipping, private label packaging, and custom OEM manufacturing for gourmet brands worldwide. We provide official FSSAI, Phytosanitary, and Organic Certifications for international shipping.'
   }
 ];
 

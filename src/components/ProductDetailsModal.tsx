@@ -453,7 +453,7 @@ export default function ProductDetailsModal({
 
               {/* Tabs list (Description, Nutrition, Ingredients, Shipping) */}
               <div className="mt-4 border-b border-stone-200">
-                <div className="flex overflow-x-auto gap-4 md:gap-6 -mb-px">
+                <div className="flex flex-wrap gap-x-4 md:gap-x-6 gap-y-2 -mb-px">
                   {[
                     { id: 'desc', label: 'Overviews' },
                     { id: 'facts', label: 'Nutrition facts' },

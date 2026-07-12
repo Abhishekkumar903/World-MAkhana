@@ -5,12 +5,12 @@
 
 import React, { useState, useEffect } from 'react';
 import { 
-  Heart, ShoppingBag, Search, Sparkles, Star, ChevronRight, 
+  Heart, ShoppingBag, Search, Sparkles, Star, ChevronRight, ChevronDown, Filter,
   MapPin, Check, Plus, ShoppingCart, Trash2, ShieldCheck, 
   ArrowRight, Award, Compass, Gift, Hammer, Info, Leaf, 
   Moon, Sun, Trash, Play, RefreshCw, Layers, CheckSquare, 
   MessageSquare, FileText, Globe, Truck, HelpCircle, User, 
-  Eye, CornerRightDown
+  Eye, CornerRightDown, Phone, Wheat, Ban
 } from 'lucide-react';
 
 import { Product, CartItem, Order, BulkEnquiry, ExportEnquiry, Recipe, BlogArticle } from './types';
@@ -20,14 +20,62 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import AISearch from './components/AISearch';
 import ProductDetailsModal from './components/ProductDetailsModal';
-import AdminPanel from './components/AdminPanel';
+import { motion } from 'motion/react';
+
+const categoryTree = [
+  {
+    id: 'raw',
+    name: 'Raw',
+    subcategories: [
+      { id: 'premium-raw', name: 'Premium Raw Makhana' },
+      { id: 'medium-raw', name: 'Medium Raw Makhana' },
+      { id: 'jumbo-raw', name: 'Jumbo Raw Makhana' },
+      { id: 'roasted-raw', name: 'Roasted Raw Makhana' },
+      { id: 'organic-raw', name: 'Organic Raw Makhana' }
+    ]
+  },
+  {
+    id: 'roasted',
+    name: 'Flavors',
+    subcategories: [
+      { id: 'peri-peri', name: 'Peri Peri' },
+      { id: 'cheese', name: 'Cheese' },
+      { id: 'cream-onion', name: 'Cream & Onion' },
+      { id: 'pudina-mint', name: 'Pudina Mint' },
+      { id: 'tomato-tangy', name: 'Tomato Tangy' },
+      { id: 'black-pepper', name: 'Black Pepper' },
+      { id: 'pink-salt', name: 'Himalayan Pink Salt' },
+      { id: 'chilli-garlic', name: 'Chilli Garlic' },
+      { id: 'barbecue', name: 'Barbecue' },
+      { id: 'masala-mix', name: 'Masala Mix' }
+    ]
+  }
+];
+
+const categoryNamesMap: Record<string, string> = {
+  'premium-raw': 'Premium Raw Makhana',
+  'medium-raw': 'Medium Raw Makhana',
+  'jumbo-raw': 'Jumbo Raw Makhana',
+  'roasted-raw': 'Roasted Raw Makhana',
+  'organic-raw': 'Organic Raw Makhana',
+  'peri-peri': 'Peri Peri',
+  'cheese': 'Cheese',
+  'cream-onion': 'Cream & Onion',
+  'pudina-mint': 'Pudina Mint',
+  'tomato-tangy': 'Tomato Tangy',
+  'black-pepper': 'Black Pepper',
+  'pink-salt': 'Himalayan Pink Salt',
+  'chilli-garlic': 'Chilli Garlic',
+  'barbecue': 'Barbecue',
+  'masala-mix': 'Masala Mix',
+};
 
 export default function App() {
   
   // Navigation
   const [activeView, setActiveView] = useState<string>('home');
+  const [selectedCategoryTab, setSelectedCategoryTab] = useState<string>('raw');
   const [aiSearchOpen, setAiSearchOpen] = useState(false);
-  const [adminOpen, setAdminOpen] = useState(false);
 
   useEffect(() => {
     document.documentElement.classList.remove('dark');
@@ -62,7 +110,7 @@ export default function App() {
           address: 'B2, Green Meadows, Koregaon Park',
           city: 'Pune, Maharashtra',
           pincode: '411001',
-          phone: '+91 94302 60869'
+          phone: '+91 93107 30291'
         }
       }
     ];
@@ -111,6 +159,10 @@ export default function App() {
 
   // States for Shop page sorting & filters query
   const [shopCategory, setShopCategory] = useState<string>('all');
+  const [shopSubcategory, setShopSubcategory] = useState<string>('all');
+  const [rawExpanded, setRawExpanded] = useState<boolean>(true);
+  const [flavorsExpanded, setFlavorsExpanded] = useState<boolean>(true);
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState<boolean>(false);
   const [shopSearch, setShopSearch] = useState<string>('');
   
   // Custom interactive user details states (Checkout context)
@@ -122,7 +174,7 @@ export default function App() {
   const [checkoutAddress, setCheckoutAddress] = useState('Plot No. 44, Mithila Orchid Towers');
   const [checkoutCity, setCheckoutCity] = useState('Darbhanga, Bihar');
   const [checkoutPincode, setCheckoutPincode] = useState('846004');
-  const [checkoutPhone, setCheckoutPhone] = useState('+91 94302 60869');
+  const [checkoutPhone, setCheckoutPhone] = useState('+91 93107 30291');
   const [paymentMethod, setPaymentMethod] = useState<'Razorpay' | 'UPI' | 'COD'>('Razorpay');
   const [placedOrder, setPlacedOrder] = useState<Order | null>(null);
   const [pincodeValidated, setPincodeValidated] = useState<string | null>(null);
@@ -147,6 +199,24 @@ export default function App() {
   const [expFormPacking, setExpFormPacking] = useState('Direct Wholesale Sacks');
   const [expFormMsg, setExpFormMsg] = useState('');
   const [expSuccess, setExpSuccess] = useState(false);
+
+  // Private Label Customizer State
+  const [plBrandName, setPlBrandName] = useState('Nourish Organics');
+  const [plFlavor, setPlFlavor] = useState('Classic Roasted Ghee');
+  const [plMaterial, setPlMaterial] = useState('Matte Gold Foil');
+  const [plSize, setPlSize] = useState('100g Standup Pouch');
+  const [plQty, setPlQty] = useState(10000);
+  const [plName, setPlName] = useState('');
+  const [plCompany, setPlCompany] = useState('');
+  const [plEmail, setPlEmail] = useState('');
+  const [plPhone, setPlPhone] = useState('');
+  const [plSuccess, setPlSuccess] = useState(false);
+
+  // Chat Concierge State
+  const [chatMessages, setChatMessages] = useState<{ sender: 'ai' | 'user'; text: string }[]>([
+    { sender: 'ai', text: 'Welcome to the Farmingo Nuts Premium Concierge Desk. How can I assist you with your B2B/B2C global fox nuts inquiries today?' }
+  ]);
+  const [chatInput, setChatInput] = useState('');
 
   // Culinary recipe walkthrough state
   const [activeRecipeInCookMode, setActiveRecipeInCookMode] = useState<Recipe | null>(null);
@@ -381,10 +451,150 @@ export default function App() {
   const getFilteredShopProducts = () => {
     return shopProducts.filter(p => {
       const matchCat = shopCategory === 'all' || p.category === shopCategory;
+      const matchSubcat = shopSubcategory === 'all' || p.subcategory === shopSubcategory;
       const matchSearch = p.name.toLowerCase().includes(shopSearch.toLowerCase()) || 
                           p.description.toLowerCase().includes(shopSearch.toLowerCase());
-      return matchCat && matchSearch;
+      return matchCat && matchSubcat && matchSearch;
     });
+  };
+
+  const renderCategoryTree = (isMobile: boolean) => {
+    return (
+      <div className="space-y-3.5">
+        {/* All Products header option */}
+        <button
+          onClick={() => {
+            setShopCategory('all');
+            setShopSubcategory('all');
+            if (isMobile) setMobileFiltersOpen(false);
+          }}
+          className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+            shopCategory === 'all' && shopSubcategory === 'all'
+              ? 'bg-emerald-50 text-[#2E7D32]'
+              : 'text-stone-600 hover:bg-stone-50 hover:text-stone-950 bg-white border border-stone-100 lg:border-none'
+          }`}
+        >
+          <div className="flex items-center gap-2">
+            <span className="text-stone-400 font-extrabold">•</span>
+            <span>All Products</span>
+          </div>
+          <span className="bg-stone-100 text-stone-500 px-2 py-0.5 rounded-full text-[9px] font-mono">
+            {shopProducts.length}
+          </span>
+        </button>
+
+        {/* Hierarchical sections */}
+        {categoryTree.map((cat) => {
+          const isExpanded = cat.id === 'raw' ? rawExpanded : flavorsExpanded;
+          const setExpanded = cat.id === 'raw' ? setRawExpanded : setFlavorsExpanded;
+          const isActiveCat = shopCategory === cat.id && shopSubcategory === 'all';
+          const hasActiveSubcatInThisCat = shopCategory === cat.id && shopSubcategory !== 'all';
+
+          return (
+            <div key={cat.id} className="space-y-1.5 border-t border-stone-100 pt-3.5 first:border-none first:pt-0">
+              {/* Parent Category Row */}
+              <div className="flex items-center justify-between gap-1 w-full">
+                <button
+                  onClick={() => {
+                    setShopCategory(cat.id);
+                    setShopSubcategory('all');
+                    setExpanded(true); // Auto-expand when selecting parent
+                    if (isMobile) setMobileFiltersOpen(false);
+                  }}
+                  className={`flex-grow flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-serif font-extrabold text-left transition-all cursor-pointer ${
+                    isActiveCat
+                      ? 'bg-emerald-50 text-[#2E7D32]'
+                      : 'text-stone-800 hover:bg-stone-50'
+                  }`}
+                >
+                  <span className={`text-[9px] transition-transform duration-200 ${isExpanded ? 'rotate-90' : 'rotate-0'}`}>
+                    ▶
+                  </span>
+                  <span className="uppercase tracking-wider">{cat.name}</span>
+                  {hasActiveSubcatInThisCat && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#2E7D32]" />
+                  )}
+                </button>
+
+                {/* Expansion toggle arrow button */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setExpanded(!isExpanded);
+                  }}
+                  className="p-1.5 text-stone-400 hover:text-stone-700 hover:bg-stone-100 rounded-lg transition-colors cursor-pointer"
+                  title={isExpanded ? "Collapse" : "Expand"}
+                >
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
+                </button>
+              </div>
+
+              {/* Subcategories (Expandable with animation/transition) */}
+              <div 
+                className={`pl-4 space-y-1 overflow-hidden transition-all duration-300 ${
+                  isExpanded ? 'max-h-[500px] opacity-100 py-1' : 'max-h-0 opacity-0 py-0'
+                }`}
+              >
+                {cat.subcategories.map((subcat) => {
+                  const isActiveSubcat = shopSubcategory === subcat.id;
+                  const subcatCount = shopProducts.filter(p => p.subcategory === subcat.id).length;
+
+                  return (
+                    <button
+                      key={subcat.id}
+                      onClick={() => {
+                        setShopCategory(cat.id);
+                        setShopSubcategory(subcat.id);
+                        if (isMobile) setMobileFiltersOpen(false);
+                      }}
+                      className={`w-full flex items-center justify-between px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+                        isActiveSubcat
+                          ? 'text-[#2E7D32] bg-emerald-50/50 font-bold'
+                          : 'text-stone-500 hover:text-stone-900 hover:bg-stone-50'
+                      }`}
+                    >
+                      <span className="truncate flex items-center gap-1.5">
+                        <span className={`text-[8px] ${isActiveSubcat ? 'text-[#2E7D32]' : 'text-stone-300'}`}>
+                          •
+                        </span>
+                        <span>{subcat.name}</span>
+                      </span>
+                      <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded-full ${
+                        isActiveSubcat ? 'bg-emerald-100 text-[#2E7D32] font-semibold' : 'bg-stone-50 text-stone-400'
+                      }`}>
+                        {subcatCount}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+
+        {/* Wholesale & Bulk category option at bottom */}
+        <button
+          onClick={() => {
+            setShopCategory('bulk-export');
+            setShopSubcategory('all');
+            if (isMobile) setMobileFiltersOpen(false);
+          }}
+          className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+            shopCategory === 'bulk-export' && shopSubcategory === 'all'
+              ? 'bg-emerald-50 text-[#2E7D32]'
+              : 'text-stone-600 hover:bg-stone-50 hover:text-stone-950 bg-white border border-stone-100 lg:border-none'
+          }`}
+        >
+          <div className="flex items-center gap-2">
+            <span className="text-stone-400 font-extrabold">•</span>
+            <span>Wholesale & Bulk</span>
+          </div>
+          <span className="bg-stone-100 text-stone-500 px-2 py-0.5 rounded-full text-[9px] font-mono">
+            {shopProducts.filter(p => p.category === 'bulk-export').length}
+          </span>
+        </button>
+      </div>
+    );
   };
 
   return (
@@ -397,10 +607,20 @@ export default function App() {
         onOpenCart={() => { setActiveView('checkout'); setCheckoutStep('cart'); }}
         onOpenWishlist={() => setActiveView('wishlist')}
         onOpenAISearch={() => setAiSearchOpen(true)}
-        onOpenAdmin={() => setAdminOpen(true)}
         activeView={activeView}
         onNavigate={(view) => {
           setActiveView(view);
+          window.scrollTo(0, 0);
+        }}
+        onSelectCategory={(category, subcategory) => {
+          setShopCategory(category);
+          setShopSubcategory(subcategory);
+          if (category === 'raw') {
+            setRawExpanded(true);
+          } else if (category === 'roasted') {
+            setFlavorsExpanded(true);
+          }
+          setActiveView('shop');
           window.scrollTo(0, 0);
         }}
       />
@@ -413,88 +633,412 @@ export default function App() {
           <div className="space-y-16 pb-20">
             
             {/* Premium Luxury Hero Section */}
-            <section className="relative overflow-hidden bg-gradient-to-tr from-amber-50 to-white pt-10 pb-16 md:py-24">
-              <div className="absolute top-0 right-0 w-2/3 h-full bg-[#2E7D32]/5 blur-3xl rounded-full translate-x-1/2 -translate-y-12 select-none"></div>
+            <section className="relative overflow-hidden bg-[#F6F1EA] py-12 md:py-20 lg:py-24 min-h-[460px] md:min-h-[560px] lg:min-h-[620px] flex items-center">
               
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                
-                {/* Hero Words Left */}
-                <div className="lg:col-span-7 space-y-6">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#2E7D32]/10 border border-[#2E7D32]/20 rounded-full">
-                    <Sparkles className="w-4 h-4 text-[#D4AF37]" />
-                    <span className="text-[10px] md:text-xs font-bold text-[#2E7D32] uppercase tracking-widest">
-                      100% Certified Organic & Clean crop
-                    </span>
-                  </div>
+              {/* Mockup Background Image */}
+              <div className="absolute inset-0 w-full h-full z-0 select-none pointer-events-none">
+                <img 
+                  src="/src/assets/images/farmingo_luxury_hero_1783858291837.jpg" 
+                  alt="Farmingo Nuts Premium Background" 
+                  className="w-full h-full object-cover object-center"
+                  referrerPolicy="no-referrer"
+                />
+                {/* Responsive soft overlay: solid-ish cream on mobile for readability, fully transparent on desktop */}
+                <div className="absolute inset-0 bg-[#F6F1EA]/85 md:bg-transparent"></div>
+              </div>
 
-                  <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#111111] tracking-tight leading-none">
-                    The Crown Jewel Of <br className="hidden md:inline" />
-                    <span className="text-gradient bg-gradient-to-r from-[#2E7D32] via-emerald-800 to-[#D4AF37] bg-clip-text text-transparent">
-                      Mithila’s Wetlands
-                    </span>
-                  </h1>
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full z-10">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                  
+                  {/* Left Column: Text, Seals & Buttons (sitting directly on background, NO glass bubble card) */}
+                  <motion.div 
+                    initial={{ opacity: 0, x: -40 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.9, ease: "easeOut" }}
+                    className="md:col-span-7 lg:col-span-6 space-y-5 md:space-y-6 text-left"
+                  >
+                    <div className="space-y-1">
+                      {/* Premium script tagline */}
+                      <span className="font-cursive text-2.5xl md:text-3.5xl text-[#2E7D32] italic block leading-none font-medium mb-1">
+                        Premium Indian Makhana
+                      </span>
+                      
+                      {/* Pure, Nutritious, Globally Loved Headings in high-contrast serif */}
+                      <h1 className="font-serif text-4xl sm:text-5xl lg:text-[3.25rem] font-bold text-stone-900 leading-[1.1] tracking-tight">
+                        PURE. NUTRITIOUS.<br />
+                        <span className="text-[#2E7D32]">GLOBALLY LOVED.</span>
+                      </h1>
+                    </div>
 
-                  <p className="text-sm md:text-base text-stone-600 max-w-xl leading-relaxed">
-                    Elevate your lifestyle with our premium, sundried, hand-gradated raw waterlily fox nuts harvested by generational farmer cooperatives in Bihar, India. High in calcium, naturally gluten-free.
-                  </p>
+                    {/* Decorative elegant divider line with a leaf in the center */}
+                    <div className="flex items-center gap-3 w-full max-w-[280px] py-1">
+                      <div className="h-[1px] bg-[#2E7D32]/35 flex-grow"></div>
+                      <Leaf className="w-4 h-4 text-[#2E7D32] flex-shrink-0" />
+                      <div className="h-[1px] bg-[#2E7D32]/35 flex-grow"></div>
+                    </div>
 
-                  <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                    <button
-                      onClick={() => setActiveView('shop')}
-                      className="px-8 h-14 bg-[#2E7D32] hover:bg-[#2E7D32]/95 text-white rounded-2xl flex items-center justify-center gap-2 font-bold text-sm shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5 cursor-pointer"
-                    >
-                      Browse Healthy Flavours
-                      <ArrowRight className="w-4.5 h-4.5 text-[#D4AF37]" />
-                    </button>
-                    
-                    <button
-                      onClick={() => setActiveView('bulk')}
-                      className="px-8 h-14 bg-white hover:bg-stone-50 text-[#111111] border-2 border-stone-200 rounded-2xl flex items-center justify-center gap-2 font-bold text-sm shadow-sm transition-all hover:-translate-y-0.5 cursor-pointer"
-                    >
-                      Request Wholeslae Quote
-                    </button>
-                  </div>
+                    {/* Subtitle */}
+                    <p className="text-stone-850 text-sm md:text-base leading-relaxed font-sans font-semibold max-w-md">
+                      From the finest farms of India to your table.<br />
+                      Healthy snacking with natural goodness.
+                    </p>
 
-                  {/* Micro seals */}
-                  <div className="pt-4 border-t border-amber-100 flex gap-6 text-[10px] font-bold text-stone-500 uppercase tracking-widest">
-                    <span className="flex items-center gap-1.5">
-                      ✓ Sourced direct from Bihar
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                      ✓ Zero Bleach Processing
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                      ✓ FSSAI Standard Compliant
-                    </span>
-                  </div>
-                </div>
-
-                {/* Hero Image Right */}
-                <div className="lg:col-span-5 relative mt-6 lg:mt-0 flex justify-center">
-                  <div className="relative w-full max-w-md aspect-[4/3] sm:aspect-square rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-white group hover:shadow-3xl transition-all duration-300">
-                    <img 
-                      src="/assets/images/suta_7_makhana_1781947116055.jpg" 
-                      alt="Premium Colossal Jumbo Makhana Bowl" 
-                      className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
-                      referrerPolicy="no-referrer"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
-                    <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end text-white animate-fadeIn">
-                      <div>
-                        <span className="text-[10px] uppercase tracking-wider text-[#D4AF37] font-bold font-mono">7 Suta Grade</span>
-                        <h4 className="font-serif font-bold text-lg leading-tight">Colossal Jumbo Makhana</h4>
-                        <p className="text-[11px] text-stone-200 font-sans mt-0.5">Handpicked premium culinary gold</p>
+                    {/* Premium Seals Section (Icons on top, label below, thin dividers) */}
+                    <div className="flex items-center justify-between gap-1 sm:gap-2 max-w-md py-4 border-t border-b border-stone-300/60 my-2">
+                      {/* 100% Natural */}
+                      <div className="flex flex-col items-center flex-1">
+                        <div className="w-11 h-11 rounded-full border border-[#2E7D32]/30 bg-white/70 flex items-center justify-center text-[#2E7D32] shadow-sm">
+                          <Leaf className="w-4 h-4 text-[#2E7D32]" />
+                        </div>
+                        <span className="text-[9px] md:text-[10px] font-extrabold text-stone-700 text-center mt-2.5 tracking-wide uppercase leading-tight">100% Natural</span>
                       </div>
-                      <button 
-                        onClick={() => handleSelectProductFromList(PRODUCTS.find(p => p.id === 'raw-jumbo') || PRODUCTS[0])}
-                        className="px-4 py-2 bg-[#2E7D32]/95 hover:bg-[#2E7D32] hover:text-[#D4AF37] text-white text-xs font-bold rounded-xl shadow-md cursor-pointer transition-colors shrink-0"
+                      
+                      {/* Divider */}
+                      <div className="h-8 w-[1px] bg-stone-300/80"></div>
+
+                      {/* High Protein */}
+                      <div className="flex flex-col items-center flex-1">
+                        <div className="w-11 h-11 rounded-full border border-[#2E7D32]/30 bg-white/70 flex items-center justify-center text-[#2E7D32] shadow-sm">
+                          <Award className="w-4 h-4 text-[#2E7D32]" />
+                        </div>
+                        <span className="text-[9px] md:text-[10px] font-extrabold text-stone-700 text-center mt-2.5 tracking-wide uppercase leading-tight">High in Protein</span>
+                      </div>
+
+                      {/* Divider */}
+                      <div className="h-8 w-[1px] bg-stone-300/80"></div>
+
+                      {/* Gluten Free */}
+                      <div className="flex flex-col items-center flex-1">
+                        <div className="w-11 h-11 rounded-full border border-[#2E7D32]/30 bg-white/70 flex items-center justify-center text-[#2E7D32] shadow-sm">
+                          <Wheat className="w-4 h-4 text-[#2E7D32]" />
+                        </div>
+                        <span className="text-[9px] md:text-[10px] font-extrabold text-stone-700 text-center mt-2.5 tracking-wide uppercase leading-tight">Gluten Free</span>
+                      </div>
+
+                      {/* Divider */}
+                      <div className="h-8 w-[1px] bg-stone-300/80"></div>
+
+                      {/* No Preservatives */}
+                      <div className="flex flex-col items-center flex-1">
+                        <div className="w-11 h-11 rounded-full border border-[#2E7D32]/30 bg-white/70 flex items-center justify-center text-[#2E7D32] shadow-sm">
+                          <Ban className="w-4 h-4 text-[#2E7D32]" />
+                        </div>
+                        <span className="text-[9px] md:text-[10px] font-extrabold text-stone-700 text-center mt-2.5 tracking-wide uppercase leading-tight">No Preservatives</span>
+                      </div>
+                    </div>
+
+                    {/* Action buttons */}
+                    <div className="flex flex-wrap gap-3.5 pt-2">
+                      <button
+                        onClick={() => setActiveView('shop')}
+                        className="px-8 py-3.5 bg-[#2E7D32] hover:bg-[#1E5631] text-white rounded-lg flex items-center justify-center gap-2 font-bold text-xs uppercase tracking-widest shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5 cursor-pointer"
                       >
-                        See Specs
+                        <ShoppingCart className="w-4 h-4" />
+                        Shop Now
+                      </button>
+                      
+                      <button
+                        onClick={() => {
+                          setActiveView('categories');
+                          window.scrollTo(0, 0);
+                        }}
+                        className="px-8 py-3.5 bg-transparent hover:bg-stone-900/5 text-stone-900 border border-stone-800 rounded-lg flex items-center justify-center gap-2 font-bold text-xs uppercase tracking-widest transition-all hover:-translate-y-0.5 cursor-pointer"
+                      >
+                        Explore Products →
                       </button>
                     </div>
-                  </div>
+                  </motion.div>
+                  
+                </div>
+              </div>
+            </section>
+
+            {/* SHOP BY CATEGORY SECTION (CAROUSEL WITH LEFT/RIGHT ARROWS) */}
+            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+              <div className="text-center space-y-1">
+                <span className="text-xs font-bold text-[#2E7D32] uppercase tracking-widest block">Explore Our World</span>
+                <h2 className="font-serif text-2.5xl md:text-3.5xl font-extrabold text-[#111111]">Shop by Category</h2>
+              </div>
+
+              {/* Slider Container Wrapper with Relative Navigation Arrows */}
+              <div className="relative px-8">
+                {/* Left Arrow */}
+                <button
+                  onClick={() => {
+                    const el = document.getElementById('category-scroll-container');
+                    if (el) el.scrollBy({ left: -260, behavior: 'smooth' });
+                  }}
+                  className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-stone-200 bg-white shadow-sm hover:shadow flex items-center justify-center text-stone-700 hover:text-[#2E7D32] hover:border-[#2E7D32]/30 transition-all z-10 cursor-pointer"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+
+                {/* Categories Scroll Container */}
+                <div
+                  id="category-scroll-container"
+                  className="flex items-center justify-start md:justify-center gap-6 overflow-x-auto scrollbar-none py-4 px-2"
+                  style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                >
+                  {[
+                    {
+                      name: 'Raw Makhana',
+                      image: '/src/assets/images/raw_makhana_jumbo_1781940261968.jpg',
+                      onClick: () => {
+                        setShopCategory('raw');
+                        setShopSubcategory('all');
+                        setRawExpanded(true);
+                        setActiveView('shop');
+                        window.scrollTo(0, 0);
+                      }
+                    },
+                    {
+                      name: 'Roasted Makhana',
+                      image: '/src/assets/images/roasted_makhana_golden_1781940274693.jpg',
+                      onClick: () => {
+                        setShopCategory('raw');
+                        setShopSubcategory('roasted-raw');
+                        setRawExpanded(true);
+                        setActiveView('shop');
+                        window.scrollTo(0, 0);
+                      }
+                    },
+                    {
+                      name: 'Flavoured Makhana',
+                      image: '/src/assets/images/cheese_makhana_cheddar_1781940285526.jpg',
+                      onClick: () => {
+                        setShopCategory('roasted');
+                        setShopSubcategory('all');
+                        setFlavorsExpanded(true);
+                        setActiveView('shop');
+                        window.scrollTo(0, 0);
+                      }
+                    },
+                    {
+                      name: 'Organic Makhana',
+                      image: '/assets/images/suta_6_makhana_1781947102519.jpg',
+                      onClick: () => {
+                        setShopCategory('raw');
+                        setShopSubcategory('organic-raw');
+                        setRawExpanded(true);
+                        setActiveView('shop');
+                        window.scrollTo(0, 0);
+                      }
+                    }
+                  ].map((cat, idx) => (
+                    <div
+                      key={idx}
+                      onClick={cat.onClick}
+                      className="flex flex-col items-center flex-shrink-0 w-28 sm:w-32 md:w-36 group cursor-pointer"
+                    >
+                      {/* Round Circle Wrapper with custom shadow and golden border */}
+                      <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full overflow-hidden border border-amber-100 bg-stone-50 p-1.5 shadow-sm group-hover:shadow-md group-hover:border-[#2E7D32]/45 transition-all duration-300">
+                        <img
+                          src={cat.image}
+                          alt={cat.name}
+                          className="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500"
+                          referrerPolicy="no-referrer"
+                        />
+                      </div>
+                      {/* Name below circle */}
+                      <span className="text-xs sm:text-sm font-semibold text-stone-800 group-hover:text-[#2E7D32] text-center mt-3 tracking-wide transition-colors">
+                        {cat.name}
+                      </span>
+                    </div>
+                  ))}
                 </div>
 
+                {/* Right Arrow */}
+                <button
+                  onClick={() => {
+                    const el = document.getElementById('category-scroll-container');
+                    if (el) el.scrollBy({ left: 260, behavior: 'smooth' });
+                  }}
+                  className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-stone-200 bg-white shadow-sm hover:shadow flex items-center justify-center text-stone-700 hover:text-[#2E7D32] hover:border-[#2E7D32]/30 transition-all z-10 cursor-pointer"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+            </section>
+
+            {/* BEST SELLERS SECTION */}
+            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+              <div className="text-center space-y-2">
+                <h2 className="font-serif text-3xl md:text-4xl font-extrabold text-[#111111] tracking-wider uppercase">
+                  Best Sellers
+                </h2>
+                {/* Beautiful custom green leaf divider */}
+                <div className="flex items-center justify-center gap-3 w-full max-w-[200px] mx-auto py-1">
+                  <div className="h-[1px] bg-[#2E7D32]/35 flex-grow"></div>
+                  <Leaf className="w-4 h-4 text-[#2E7D32] flex-shrink-0" />
+                  <div className="h-[1px] bg-[#2E7D32]/35 flex-grow"></div>
+                </div>
+              </div>
+
+              {/* Grid of 6 Cards mimicking the uploaded image layout */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-5">
+                {[
+                  {
+                    id: 'roasted-plain-raw',
+                    displayName: 'Premium Classic Makhana (100g)',
+                    realName: 'Slow-Roasted Crisp Plain Makhana',
+                    price: 199,
+                    mrp: 260,
+                    rating: 4.9,
+                    reviewsCount: 142,
+                    image: '/src/assets/images/classic_makhana_pouch_1783860782473.jpg'
+                  },
+                  {
+                    id: 'roasted-pink-salt',
+                    displayName: 'Himalayan Salt Makhana (100g)',
+                    realName: 'Himalayan Pink Salt Slow-Baked Makhana',
+                    price: 219,
+                    mrp: 285,
+                    rating: 4.9,
+                    reviewsCount: 167,
+                    image: '/src/assets/images/himalayan_makhana_pouch_1783861060681.jpg'
+                  },
+                  {
+                    id: 'roasted-peri-peri',
+                    displayName: 'Peri Peri Makhana (100g)',
+                    realName: 'Fiery Spicy Peri Peri Gourmet Makhana',
+                    price: 229,
+                    mrp: 295,
+                    rating: 4.7,
+                    reviewsCount: 322,
+                    image: '/src/assets/images/peri_peri_makhana_pouch_1783861321396.jpg'
+                  },
+                  {
+                    id: 'roasted-cheese',
+                    displayName: 'Cheese Makhana (100g)',
+                    realName: 'Creamy Cheddar Cheese Gold Makhana',
+                    price: 229,
+                    mrp: 295,
+                    rating: 4.8,
+                    reviewsCount: 245,
+                    image: '/src/assets/images/cheese_makhana_pouch_1783861925140.jpg'
+                  },
+                  {
+                    id: 'roasted-pudina-mint',
+                    displayName: 'Mint Makhana (100g)',
+                    realName: 'Gourmet Pudina Mint Herb Makhana',
+                    price: 219,
+                    mrp: 285,
+                    rating: 4.7,
+                    reviewsCount: 142,
+                    image: '/src/assets/images/mint_makhana_pouch_1783862500660.jpg'
+                  },
+                  {
+                    id: 'roasted-combo-pack',
+                    displayName: 'Premium Combo Pack (4 x 100g)',
+                    realName: 'Premium Combo Pack (4 x 100g)',
+                    price: 799,
+                    mrp: 999,
+                    rating: 4.9,
+                    reviewsCount: 382,
+                    image: '/src/assets/images/combo_makhana_pouch_1783862785114.jpg'
+                  }
+                ].map((card, idx) => {
+                  const targetProduct = shopProducts.find(p => p.id === card.id);
+                  const isWishlisted = wishlist.some(w => w.id === card.id);
+                  return (
+                    <div
+                      key={idx}
+                      className="bg-white border border-stone-100 rounded-3xl p-3.5 flex flex-col justify-between hover:shadow-lg hover:border-[#2E7D32]/10 transition-all duration-300"
+                    >
+                      {/* Product Image click opens detail */}
+                      <div
+                        onClick={() => {
+                          if (targetProduct) {
+                            handleSelectProductFromList(targetProduct);
+                          }
+                        }}
+                        className="aspect-square bg-stone-50 rounded-2xl overflow-hidden relative cursor-pointer group border border-stone-50/50"
+                      >
+                        <img
+                          src={card.image}
+                          alt={card.displayName}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          referrerPolicy="no-referrer"
+                        />
+                        {/* Elegant Discount Badge */}
+                        <span className="absolute top-2 left-2 bg-[#2E7D32] text-white font-extrabold text-[9px] px-2.5 py-0.5 rounded-full shadow-sm">
+                          {Math.round(((card.mrp - card.price) / card.mrp) * 100)}% OFF
+                        </span>
+                      </div>
+
+                      {/* Info Area */}
+                      <div className="mt-3.5 space-y-1.5 flex-1 flex flex-col justify-between">
+                        <div>
+                          <h4
+                            onClick={() => {
+                              if (targetProduct) {
+                                handleSelectProductFromList(targetProduct);
+                              }
+                            }}
+                            className="font-serif font-bold text-xs text-stone-900 hover:text-[#2E7D32] transition-colors leading-snug line-clamp-2 cursor-pointer h-10 mb-1"
+                          >
+                            {card.displayName}
+                          </h4>
+
+                          {/* Star Rating Row */}
+                          <div className="flex items-center text-amber-500 gap-0.5 text-[10px] font-bold">
+                            <span className="text-sm">★</span>
+                            <span className="text-stone-500">
+                              {card.rating} ({card.reviewsCount})
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Price block */}
+                        <div className="pt-1 flex items-baseline gap-1.5">
+                          <span className="font-extrabold text-stone-900 text-base">₹{card.price}</span>
+                          <span className="text-[10px] text-stone-400 line-through">₹{card.mrp}</span>
+                        </div>
+                      </div>
+
+                      {/* Action buttons matching the image style */}
+                      <div className="pt-3 mt-3 border-t border-stone-100 flex gap-2 items-center">
+                        {/* ADD TO CART button (full width-ish) */}
+                        <button
+                          onClick={() => {
+                            if (targetProduct) {
+                              handleAddToCart({
+                                product: targetProduct,
+                                selectedWeight: card.id === 'roasted-combo-pack' ? '4 x 100g Pack' : '100g',
+                                quantity: 1
+                              });
+                              alert(`Added ${card.displayName} to your Cart successfully!`);
+                            }
+                          }}
+                          className="flex-grow py-2.5 bg-[#2E7D32] hover:bg-emerald-800 text-white font-bold text-[10px] uppercase tracking-wider rounded-xl shadow-sm hover:shadow transition-all cursor-pointer text-center"
+                        >
+                          Add to Cart
+                        </button>
+
+                        {/* Heart Icon on side */}
+                        <button
+                          onClick={() => {
+                            if (targetProduct) {
+                              handleAddToWishlist(targetProduct);
+                            }
+                          }}
+                          className={`p-2.5 rounded-xl border flex items-center justify-center transition-all cursor-pointer ${
+                            isWishlisted
+                              ? 'bg-red-50 border-red-200 text-red-500'
+                              : 'bg-white border-stone-200 text-stone-400 hover:text-red-500 hover:border-red-200'
+                          }`}
+                          title="Add to Wishlist"
+                        >
+                          <Heart className="w-4 h-4" fill={isWishlisted ? "currentColor" : "none"} />
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </section>
 
@@ -682,38 +1226,73 @@ export default function App() {
         {/* VIEW 2: SHOP PAGE (ULTRA HIGH-INTEGRITY FILTERS & ITEMS) */}
         {activeView === 'shop' && (
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b border-stone-200 pb-5">
-              <div>
-                <span className="text-xs font-bold text-[#2E7D32] uppercase tracking-widest block">Mithila Warehouse Inventory</span>
-                <h2 className="font-serif text-2xl md:text-3xl font-extrabold text-[#111111]">Explore Our Premium Makhana Catalog</h2>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {['all', 'raw', 'roasted', 'bulk-export'].map((cat) => (
-                  <button
-                    key={cat}
-                    onClick={() => setShopCategory(cat)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer transition-all uppercase tracking-wider ${shopCategory === cat ? 'bg-[#2E7D32] text-white shadow' : 'bg-white border border-stone-200 text-stone-500 hover:border-amber-200 hover:text-stone-800'}`}
+            <div className="border-b border-stone-200 pb-5">
+              <span className="text-xs font-bold text-[#2E7D32] uppercase tracking-widest block">Mithila Warehouse Inventory</span>
+              <h2 className="font-serif text-2xl md:text-3xl font-extrabold text-[#111111]">Explore Our Premium Makhana Catalog</h2>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              {/* Left Column: Categories Sidebar */}
+              <div className="lg:col-span-3 lg:sticky lg:top-24 space-y-4">
+                {/* Desktop Sidebar: hidden on mobile/tablet */}
+                <div className="hidden lg:block bg-white border border-amber-100 rounded-3xl p-5 shadow-sm space-y-4">
+                  <div className="flex items-center gap-2 text-stone-900 font-serif font-extrabold text-base pb-2 border-b border-stone-100">
+                    <span className="text-[#2E7D32] text-xs">▶</span>
+                    <span>Categories</span>
+                  </div>
+                  {renderCategoryTree(false)}
+                </div>
+
+                {/* Mobile Sidebar Toggle: visible only on mobile/tablet */}
+                <div className="lg:hidden">
+                  <button 
+                    onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
+                    className="w-full flex items-center justify-between bg-white border border-amber-100 rounded-2xl p-4 shadow-sm text-sm font-bold text-[#111111] hover:bg-stone-50 transition-all cursor-pointer"
                   >
-                    {cat === 'all' ? 'All variants' : cat === 'bulk-export' ? 'Wholesale Bags' : cat}
+                    <span className="flex items-center gap-2">
+                      <Filter className="w-4 h-4 text-[#2E7D32]" />
+                      <span>Category: {
+                        shopSubcategory !== 'all' 
+                          ? categoryNamesMap[shopSubcategory] || shopSubcategory 
+                          : shopCategory === 'all' 
+                            ? 'All Products' 
+                            : shopCategory === 'raw' 
+                              ? 'Raw' 
+                              : shopCategory === 'roasted' 
+                                ? 'Flavors' 
+                                : 'Wholesale & Bulk'
+                      }</span>
+                    </span>
+                    <ChevronDown className={`w-4 h-4 text-stone-500 transition-transform duration-300 ${mobileFiltersOpen ? 'rotate-180' : ''}`} />
                   </button>
-                ))}
+                  
+                  {/* Mobile Collapsible Body */}
+                  <div 
+                    className={`mt-2 bg-white border border-amber-100 rounded-2xl p-4 shadow-sm space-y-4 transition-all duration-300 overflow-hidden ${
+                      mobileFiltersOpen ? 'max-h-[800px] opacity-100 py-4' : 'max-h-0 opacity-0 py-0 border-none pointer-events-none'
+                    }`}
+                  >
+                    {renderCategoryTree(true)}
+                  </div>
+                </div>
               </div>
-            </div>
 
-            {/* Search filter drawer */}
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search catalog for flavors, sizes, or keywords (e.g. 'Peri Peri', '5 Suta')..."
-                value={shopSearch}
-                onChange={(e) => setShopSearch(e.target.value)}
-                className="w-full p-3.5 pl-11 bg-white border border-amber-100 rounded-2xl shadow-inner text-sm focus:border-[#2E7D32] focus:outline-none"
-              />
-              <Search className="absolute left-4 top-4.5 w-4.5 h-4.5 text-stone-400" />
-            </div>
+              {/* Right Column: Search & Products Grid */}
+              <div className="lg:col-span-9 space-y-6">
+                {/* Search filter drawer */}
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="Search catalog for flavors, sizes, or keywords (e.g. 'Peri Peri', '5 Suta')..."
+                    value={shopSearch}
+                    onChange={(e) => setShopSearch(e.target.value)}
+                    className="w-full p-3.5 pl-11 bg-white border border-amber-100 rounded-2xl shadow-inner text-sm focus:border-[#2E7D32] focus:outline-none"
+                  />
+                  <Search className="absolute left-4 top-4.5 w-4.5 h-4.5 text-stone-400" />
+                </div>
 
-            {/* Products grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-4 gap-6">
+                {/* Products grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {getFilteredShopProducts().map((product) => {
                 const offPercent = Math.round(((product.mrp - product.price) / product.mrp) * 100);
                 return (
@@ -782,6 +1361,8 @@ export default function App() {
                 </button>
               </div>
             )}
+              </div>
+            </div>
           </div>
         )}
 
@@ -892,8 +1473,8 @@ export default function App() {
               <div className="p-4 bg-[#111111] text-white rounded-2xl">
                 <span className="block text-[10px] text-[#D4AF37] uppercase tracking-widest font-mono font-bold">Trading Help desk line</span>
                 <span className="block text-base font-serif font-bold mt-1">Sourcing Office, Greater Noida:</span>
-                <a href="tel:+919430260869" className="text-base text-gradient bg-gradient-to-r from-emerald-400 to-[#D4AF37] block font-bold mt-1">
-                  📞 +91 94302 60869 (Trading Desk)
+                <a href="tel:+919310730291" className="text-base text-gradient bg-gradient-to-r from-emerald-400 to-[#D4AF37] block font-bold mt-1">
+                  📞 +91 93107 30291 (Trading Desk)
                 </a>
               </div>
             </div>
@@ -956,7 +1537,7 @@ export default function App() {
                         type="tel"
                         value={bulkFormPhone}
                         onChange={(e) => setBulkFormPhone(e.target.value)}
-                        placeholder="e.g. +91 94302 60869"
+                        placeholder="e.g. +91 93107 30291"
                         className="w-full p-2.5 bg-[#F8F5F0] border border-stone-200 rounded-lg outline-none focus:border-[#2E7D32]"
                         required
                       />
@@ -1304,14 +1885,14 @@ export default function App() {
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
             <div className="text-center space-y-2 max-w-xl mx-auto">
               <span className="text-xs font-bold text-[#2E7D32] uppercase tracking-widest block">Our Sponsoring Origin</span>
-              <h2 className="font-serif text-2xl md:text-4xl font-extrabold text-[#111111]">Makhana World: Sourcing with Integrity</h2>
+              <h2 className="font-serif text-2xl md:text-4xl font-extrabold text-[#111111]">Farmingo Nuts: Sourcing with Integrity</h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-white p-6 md:p-8 rounded-3xl border border-amber-100 shadow-sm leading-relaxed text-sm text-stone-650 text-stone-600">
               <div className="space-y-4 font-sans font-medium">
                 <h3 className="font-serif text-lg font-bold text-stone-900 mb-2">Our Company Story</h3>
                 <p>
-                  Makhana World was founded on a simple insight: although Bihar supplies over 90% of global fox nuts, the family pools waders remained economically marginalized. Middlemen bleach the nuts to blend low-grade Sutas under premium labels.
+                  Farmingo Nuts was founded on a simple insight: although Bihar supplies over 90% of global fox nuts, the family pools waders remained economically marginalized. Middlemen bleach the nuts to blend low-grade Sutas under premium labels.
                 </p>
                 <p>
                   We established direct alliances with the Farmer Unions of Darbhanga and Madhubani. By establishing automated grading sieves right next to the lakes, we eliminate bleaching completely, ensuring 100% genuine sun-dried raw crop grade density and returning up to 60% of retail sale profits straight to native family accounts.
@@ -1360,7 +1941,7 @@ export default function App() {
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {wishlist.map((product) => (
                   <div key={product.id} className="p-3 bg-white border border-stone-100 rounded-2xl flex flex-col justify-between hover:shadow-lg transition-all duration-300">
                     <div className="aspect-square bg-stone-50 rounded-xl overflow-hidden relative cursor-pointer" onClick={() => handleSelectProductFromList(product)}>
@@ -1801,7 +2382,7 @@ export default function App() {
         {activeView === 'policies' && (
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8 bg-white border border-amber-100 rounded-3xl mt-12 mb-16 leading-relaxed text-sm text-stone-650 text-stone-600">
             <h1 className="font-serif text-2xl md:text-3.5xl font-extrabold text-stone-900 border-b border-stone-200 pb-4">
-              Makhana World legal Regulatory Policies
+              Farmingo Nuts Legal Regulatory Policies
             </h1>
 
             <section className="space-y-3 font-sans">
@@ -1809,7 +2390,7 @@ export default function App() {
                 <FileText className="w-5 h-5 text-[#D4AF37]" /> Refund & Cancellation Policy
               </h3>
               <p className="font-medium">
-                Our food products are prepared fresh and sun-dried immediately after water lily harvest. To guarantee maximum cellular protection and hygiene standards, edible items cannot be returned post-delivery unless there is a physical seal rupture or transportation package crash. If there is transit defect, email photos to support@makhanaworld.com within 24 Hours for a full refund or express replacement box.
+                Our food products are prepared fresh and sun-dried immediately after water lily harvest. To guarantee maximum cellular protection and hygiene standards, edible items cannot be returned post-delivery unless there is a physical seal rupture or transportation package crash. If there is transit defect, email photos to farmingonuts@gmail.com within 24 Hours for a full refund or express replacement box.
               </p>
             </section>
 
@@ -1827,9 +2408,951 @@ export default function App() {
                 <ShieldCheck className="w-5 h-5 text-[#D4AF37]" /> Privacy & Terms of Service
               </h3>
               <p className="font-medium">
-                Your transaction registry, contact numbers, and delivery PIN address are encrypted in compliance with secure ISO guidelines. Makhana World pledges 100% advertising transparency – we formulate zero mock products and run strict pesticide-free compliance audits across member farms annually.
+                Your transaction registry, contact numbers, and delivery PIN address are encrypted in compliance with secure ISO guidelines. Farmingo Nuts pledges 100% advertising transparency – we formulate zero mock products and run strict pesticide-free compliance audits across member farms annually.
               </p>
             </section>
+          </div>
+        )}
+
+        {/* VIEW 13: CATEGORIES EXPLORER */}
+        {activeView === 'categories' && (
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+            <div className="text-center max-w-2xl mx-auto space-y-2">
+              <span className="text-xs font-bold text-[#2E7D32] uppercase tracking-widest block font-mono">Premium Collections</span>
+              <h2 className="font-serif text-3xl md:text-4xl font-extrabold text-[#111111]">Explore Our Varieties</h2>
+              <p className="text-xs sm:text-sm text-stone-500">
+                Choose a category to browse our exquisite range of Mithila makhana. From hand-sorted raw sizes to gourmet kettle-roasted blends.
+              </p>
+            </div>
+
+            {/* Circular Category Slider Row exactly like in the user's reference image */}
+            <div className="relative px-8">
+              {/* Left Arrow */}
+              <button
+                onClick={() => {
+                  const el = document.getElementById('tab-category-scroll-container');
+                  if (el) el.scrollBy({ left: -260, behavior: 'smooth' });
+                }}
+                className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-stone-200 bg-white shadow-sm hover:shadow flex items-center justify-center text-stone-700 hover:text-[#2E7D32] hover:border-[#2E7D32]/30 transition-all z-10 cursor-pointer"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+
+              {/* Categories Scroll Container */}
+              <div
+                id="tab-category-scroll-container"
+                className="flex items-center justify-start md:justify-center gap-6 overflow-x-auto scrollbar-none py-4 px-2"
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              >
+                {[
+                  {
+                    id: 'raw',
+                    name: 'Raw Makhana',
+                    image: '/src/assets/images/raw_makhana_jumbo_1781940261968.jpg'
+                  },
+                  {
+                    id: 'roasted',
+                    name: 'Roasted Makhana',
+                    image: '/src/assets/images/roasted_makhana_golden_1781940274693.jpg'
+                  },
+                  {
+                    id: 'flavored',
+                    name: 'Flavoured Makhana',
+                    image: '/src/assets/images/cheese_makhana_cheddar_1781940285526.jpg'
+                  },
+                  {
+                    id: 'organic',
+                    name: 'Organic Makhana',
+                    image: '/assets/images/suta_6_makhana_1781947102519.jpg'
+                  }
+                ].map((cat) => {
+                  const isActive = selectedCategoryTab === cat.id;
+                  return (
+                    <div
+                      key={cat.id}
+                      onClick={() => setSelectedCategoryTab(cat.id)}
+                      className="flex flex-col items-center flex-shrink-0 w-28 sm:w-32 group cursor-pointer"
+                    >
+                      {/* Round Circle Wrapper */}
+                      <div className={`w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden border p-1.5 shadow-sm transition-all duration-300 ${
+                        isActive
+                          ? 'border-[#2E7D32] bg-emerald-50/30 scale-105 shadow-md ring-2 ring-[#2E7D32]/20'
+                          : 'border-amber-100 bg-stone-50 group-hover:shadow-md group-hover:border-[#2E7D32]/45'
+                      }`}>
+                        <img
+                          src={cat.image}
+                          alt={cat.name}
+                          className="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500"
+                          referrerPolicy="no-referrer"
+                        />
+                      </div>
+                      {/* Name below circle */}
+                      <span className={`text-xs sm:text-sm font-semibold text-center mt-3 tracking-wide transition-colors ${
+                        isActive ? 'text-[#2E7D32] font-bold' : 'text-stone-800 group-hover:text-[#2E7D32]'
+                      }`}>
+                        {cat.name}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Right Arrow */}
+              <button
+                onClick={() => {
+                  const el = document.getElementById('tab-category-scroll-container');
+                  if (el) el.scrollBy({ left: 260, behavior: 'smooth' });
+                }}
+                className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-stone-200 bg-white shadow-sm hover:shadow flex items-center justify-center text-stone-700 hover:text-[#2E7D32] hover:border-[#2E7D32]/30 transition-all z-10 cursor-pointer"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+
+            {/* DYNAMIC PRODUCTS SECTION BELOW CATEGORY TABS */}
+            <div className="space-y-8 pt-6 border-t border-stone-100">
+              <div className="text-center space-y-2">
+                <h3 className="font-serif text-2xl md:text-3xl font-extrabold text-[#111111] tracking-wider uppercase">
+                  {selectedCategoryTab === 'best-sellers' && 'Best Sellers'}
+                  {selectedCategoryTab === 'raw' && 'Raw makhana Seeds'}
+                  {selectedCategoryTab === 'roasted' && 'Classic Roasted Selection'}
+                  {selectedCategoryTab === 'flavored' && 'Gourmet Flavored Bites'}
+                  {selectedCategoryTab === 'organic' && 'Organic Certified Batches'}
+                  {selectedCategoryTab === 'combo' && 'Curated Combo Packages'}
+                  {selectedCategoryTab === 'gift' && 'Luxury Gift Pack Assortments'}
+                </h3>
+                {/* Beautiful custom green leaf divider */}
+                <div className="flex items-center justify-center gap-3 w-full max-w-[200px] mx-auto py-1">
+                  <div className="h-[1px] bg-[#2E7D32]/35 flex-grow"></div>
+                  <Leaf className="w-4 h-4 text-[#2E7D32] flex-shrink-0" />
+                  <div className="h-[1px] bg-[#2E7D32]/35 flex-grow"></div>
+                </div>
+              </div>
+
+              {/* Grid of Dynamic Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-5">
+                {(() => {
+                  // Filter logic based on tab selected
+                  let list = [];
+                  if (selectedCategoryTab === 'best-sellers') {
+                    list = [
+                      { id: 'roasted-plain-raw', displayName: 'Premium Classic Makhana (100g)', price: 199, mrp: 260, rating: 4.9, reviewsCount: 142, image: '/src/assets/images/classic_makhana_pouch_1783860782473.jpg' },
+                      { id: 'roasted-pink-salt', displayName: 'Himalayan Salt Makhana (100g)', price: 219, mrp: 285, rating: 4.9, reviewsCount: 167, image: '/src/assets/images/himalayan_makhana_pouch_1783861060681.jpg' },
+                      { id: 'roasted-peri-peri', displayName: 'Peri Peri Makhana (100g)', price: 229, mrp: 295, rating: 4.7, reviewsCount: 322, image: '/src/assets/images/peri_peri_makhana_pouch_1783861321396.jpg' },
+                      { id: 'roasted-cheese', displayName: 'Cheese Makhana (100g)', price: 229, mrp: 295, rating: 4.8, reviewsCount: 245, image: '/src/assets/images/cheese_makhana_pouch_1783861925140.jpg' },
+                      { id: 'roasted-pudina-mint', displayName: 'Mint Makhana (100g)', price: 219, mrp: 285, rating: 4.7, reviewsCount: 142, image: '/src/assets/images/mint_makhana_pouch_1783862500660.jpg' },
+                      { id: 'roasted-combo-pack', displayName: 'Premium Combo Pack (4 x 100g)', price: 799, mrp: 999, rating: 4.9, reviewsCount: 382, image: '/src/assets/images/combo_makhana_pouch_1783862785114.jpg' }
+                    ];
+                  } else {
+                    // Pull actual products from PRODUCTS array dynamically matching the category filter
+                    let matchedProducts = [];
+                    if (selectedCategoryTab === 'raw') {
+                      matchedProducts = shopProducts.filter(p => p.category === 'raw');
+                    } else if (selectedCategoryTab === 'roasted') {
+                      matchedProducts = shopProducts.filter(p => p.category === 'roasted' && (p.subcategory?.includes('plain') || p.id === 'roasted-plain-raw' || p.id === 'roasted-pink-salt'));
+                    } else if (selectedCategoryTab === 'flavored') {
+                      matchedProducts = shopProducts.filter(p => p.category === 'roasted' && !p.id.includes('plain') && p.id !== 'roasted-plain-raw');
+                    } else if (selectedCategoryTab === 'organic') {
+                      matchedProducts = shopProducts.filter(p => p.subcategory?.includes('organic') || p.description.toLowerCase().includes('organic') || p.fullDescription.toLowerCase().includes('organic'));
+                    } else if (selectedCategoryTab === 'combo') {
+                      matchedProducts = shopProducts.filter(p => p.id === 'roasted-combo-pack' || p.name.toLowerCase().includes('combo') || p.name.toLowerCase().includes('assortment'));
+                    } else if (selectedCategoryTab === 'gift') {
+                      matchedProducts = shopProducts.filter(p => p.id === 'roasted-combo-pack' || p.id === 'raw-jumbo');
+                    }
+
+                    // Fallback to make sure we always have elements to show
+                    if (matchedProducts.length === 0) {
+                      matchedProducts = shopProducts.slice(0, 6);
+                    }
+
+                    list = matchedProducts.map(p => ({
+                      id: p.id,
+                      displayName: p.name,
+                      price: p.price,
+                      mrp: p.mrp,
+                      rating: p.rating,
+                      reviewsCount: p.reviewsCount,
+                      image: p.images[0] || '/src/assets/images/roasted_makhana_golden_1781940274693.jpg'
+                    }));
+                  }
+
+                  return list.map((card, idx) => {
+                    const targetProduct = shopProducts.find(p => p.id === card.id);
+                    const isWishlisted = wishlist.some(w => w.id === card.id);
+                    return (
+                      <div
+                        key={idx}
+                        className="bg-white border border-stone-100 rounded-3xl p-3.5 flex flex-col justify-between hover:shadow-lg hover:border-[#2E7D32]/10 transition-all duration-300"
+                      >
+                        {/* Image area */}
+                        <div
+                          onClick={() => {
+                            if (targetProduct) {
+                              handleSelectProductFromList(targetProduct);
+                            }
+                          }}
+                          className="aspect-square bg-stone-50 rounded-2xl overflow-hidden relative cursor-pointer group border border-stone-50/50"
+                        >
+                          <img
+                            src={card.image}
+                            alt={card.displayName}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            referrerPolicy="no-referrer"
+                          />
+                          <span className="absolute top-2 left-2 bg-[#2E7D32] text-white font-extrabold text-[9px] px-2.5 py-0.5 rounded-full shadow-sm">
+                            {Math.round(((card.mrp - card.price) / card.mrp) * 100)}% OFF
+                          </span>
+                        </div>
+
+                        {/* Text details */}
+                        <div className="mt-3.5 space-y-1.5 flex-1 flex flex-col justify-between">
+                          <div>
+                            <h4
+                              onClick={() => {
+                                if (targetProduct) {
+                                  handleSelectProductFromList(targetProduct);
+                                }
+                              }}
+                              className="font-serif font-bold text-xs text-stone-900 hover:text-[#2E7D32] transition-colors leading-snug line-clamp-2 cursor-pointer h-10 mb-1"
+                            >
+                              {card.displayName}
+                            </h4>
+
+                            {/* Stars & review counts */}
+                            <div className="flex items-center text-amber-500 gap-0.5 text-[10px] font-bold">
+                              <span className="text-sm">★</span>
+                              <span className="text-stone-500">
+                                {card.rating} ({card.reviewsCount})
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Prices */}
+                          <div className="pt-1 flex items-baseline gap-1.5">
+                            <span className="font-extrabold text-stone-900 text-base">₹{card.price}</span>
+                            <span className="text-[10px] text-stone-400 line-through">₹{card.mrp}</span>
+                          </div>
+                        </div>
+
+                        {/* Bottom action row */}
+                        <div className="pt-3 mt-3 border-t border-stone-100 flex gap-2 items-center">
+                          <button
+                            onClick={() => {
+                              if (targetProduct) {
+                                handleAddToCart({
+                                  product: targetProduct,
+                                  selectedWeight: card.id === 'roasted-combo-pack' ? '4 x 100g Pack' : (targetProduct.weightOptions[0] || '100g'),
+                                  quantity: 1
+                                });
+                                alert(`Added ${card.displayName} to your Cart successfully!`);
+                              }
+                            }}
+                            className="flex-grow py-2.5 bg-[#2E7D32] hover:bg-emerald-800 text-white font-bold text-[10px] uppercase tracking-wider rounded-xl shadow-sm hover:shadow transition-all cursor-pointer text-center"
+                          >
+                            Add to Cart
+                          </button>
+
+                          <button
+                            onClick={() => {
+                              if (targetProduct) {
+                                handleAddToWishlist(targetProduct);
+                              }
+                            }}
+                            className={`p-2.5 rounded-xl border flex items-center justify-center transition-all cursor-pointer ${
+                              isWishlisted
+                                ? 'bg-red-50 border-red-200 text-red-500'
+                                : 'bg-white border-stone-200 text-stone-400 hover:text-red-500 hover:border-red-200'
+                            }`}
+                          >
+                            <Heart className="w-4 h-4" fill={isWishlisted ? "currentColor" : "none"} />
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  });
+                })()}
+              </div>
+            </div>
+
+            {/* General grading statistics badges */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-6 bg-white border border-amber-100/60 rounded-3xl text-center shadow-sm">
+              <div>
+                <span className="block text-xl md:text-2xl font-extrabold text-[#2E7D32]">98%</span>
+                <span className="text-[9px] uppercase font-bold text-stone-400 tracking-wider">Moisture Retention Score</span>
+              </div>
+              <div className="border-l border-stone-200">
+                <span className="block text-xl md:text-2xl font-extrabold text-[#2E7D32]">1,200+</span>
+                <span className="text-[9px] uppercase font-bold text-stone-400 tracking-wider">Grower Farmer Members</span>
+              </div>
+              <div className="border-l border-stone-200">
+                <span className="block text-xl md:text-2xl font-extrabold text-[#2E7D32]">0%</span>
+                <span className="text-[9px] uppercase font-bold text-stone-400 tracking-wider">Chlorine Bleach Chemical</span>
+              </div>
+              <div className="border-l border-stone-200">
+                <span className="block text-xl md:text-2xl font-extrabold text-[#2E7D32]">100%</span>
+                <span className="text-[9px] uppercase font-bold text-stone-400 tracking-wider">Direct Fair-Wage Trade</span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* VIEW 14: PRIVATE LABEL OEM CUSTOMIZER */}
+        {activeView === 'private-label' && (
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+            
+            {/* Header info */}
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b border-stone-200 pb-5">
+              <div>
+                <span className="text-xs font-bold text-[#2E7D32] uppercase tracking-widest block">OEM Private Label Workspace</span>
+                <h2 className="font-serif text-2xl md:text-3.5xl font-extrabold text-[#111111]">Design Your Custom Makhana Packaging</h2>
+                <p className="text-xs text-stone-500 mt-1">Configure materials, colors, weights, and calculate custom MOQ pricing for your brand launch.</p>
+              </div>
+              <div className="px-4 py-2 bg-amber-50 border border-amber-100 rounded-xl text-stone-700 text-[11px] font-bold">
+                💡 Estimated Project Cost: ₹{(plQty * (plSize.includes('50g') ? 14 : plSize.includes('100g') ? 22 : plSize.includes('250g') ? 48 : 85)).toLocaleString('en-IN')}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+              
+              {/* Left Column - Customizer controls */}
+              <div className="lg:col-span-5 bg-white border border-amber-100 rounded-3xl p-6 space-y-5">
+                <h3 className="font-serif text-lg font-bold text-stone-900 border-b border-stone-100 pb-2">1. Brand & Spec parameters</h3>
+                
+                <div className="space-y-4 text-xs font-semibold text-stone-700">
+                  <div>
+                    <label className="block text-stone-500 uppercase mb-1">Your Brand Logo Name</label>
+                    <input
+                      type="text"
+                      value={plBrandName}
+                      onChange={(e) => setPlBrandName(e.target.value)}
+                      placeholder="e.g. Pure Crunch Co."
+                      className="w-full p-2.5 bg-[#F8F5F0] border border-stone-200 rounded-xl outline-none focus:border-[#2E7D32]"
+                      maxLength={24}
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-stone-500 uppercase mb-1">Select Foil Theme</label>
+                      <select
+                        value={plMaterial}
+                        onChange={(e) => setPlMaterial(e.target.value)}
+                        className="w-full p-2.5 bg-[#F8F5F0] border border-stone-200 rounded-xl outline-none focus:border-[#2E7D32]"
+                      >
+                        <option value="Matte Gold Foil">Matte Royal Gold</option>
+                        <option value="Forest Green Recycled Kraft">Forest Green Kraft</option>
+                        <option value="Cosmic Charcoal Minimalist">Cosmic Charcoal</option>
+                        <option value="Festive Saffron Metallic">Saffron Metallic</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-stone-500 uppercase mb-1">Bag / Size Sizing</label>
+                      <select
+                        value={plSize}
+                        onChange={(e) => setPlSize(e.target.value)}
+                        className="w-full p-2.5 bg-[#F8F5F0] border border-stone-200 rounded-xl outline-none focus:border-[#2E7D32]"
+                      >
+                        <option value="50g Standup Pouch">50g Pouch (4 Suta)</option>
+                        <option value="100g Standup Pouch">100g Pouch (5 Suta)</option>
+                        <option value="250g Standup Pouch">250g Pouch (6 Suta)</option>
+                        <option value="500g Standup Pouch">500g Pouch (7 Suta)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-stone-500 uppercase mb-1">Makhana Savor Flavor Coat</label>
+                    <select
+                      value={plFlavor}
+                      onChange={(e) => setPlFlavor(e.target.value)}
+                      className="w-full p-2.5 bg-[#F8F5F0] border border-stone-200 rounded-xl outline-none focus:border-[#2E7D32]"
+                    >
+                      <option value="Classic Roasted Ghee">Classic Roasted A2 Ghee</option>
+                      <option value="Spicy Peri Peri Flare">Spicy Peri Peri Flare</option>
+                      <option value="Zesty Lime Mint Pudina">Zesty Lime Mint Pudina</option>
+                      <option value="Creamy White Cheddar">Creamy White Cheddar</option>
+                      <option value="Himalayan Rock Pink Salt">Himalayan Rock Pink Salt</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <div className="flex justify-between items-center mb-1">
+                      <label className="text-stone-500 uppercase">Production Volume Quantity</label>
+                      <span className="text-[#2E7D32] font-mono text-[10px] font-bold">{plQty.toLocaleString()} Units</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="5000"
+                      max="100000"
+                      step="5000"
+                      value={plQty}
+                      onChange={(e) => setPlQty(Number(e.target.value))}
+                      className="w-full h-1 bg-stone-200 rounded-lg appearance-none cursor-pointer accent-[#2E7D32]"
+                    />
+                    <span className="text-[10px] text-stone-400 font-medium">Standard packaging cylinder setup requires minimum 5,000 unit MOQ run.</span>
+                  </div>
+                </div>
+
+                <div className="border-t border-stone-100 pt-4 space-y-3">
+                  <h4 className="font-serif text-sm font-bold text-stone-800">Estimate Pricing Card</h4>
+                  
+                  {(() => {
+                    const pricePerUnit = plSize.includes('50g') ? 14 : plSize.includes('100g') ? 22 : plSize.includes('250g') ? 48 : 85;
+                    const cylFee = 12000;
+                    const totalCost = (plQty * pricePerUnit) + cylFee;
+                    return (
+                      <div className="p-3 bg-[#F8F5F0] rounded-2xl font-mono text-[11px] font-semibold text-stone-600 space-y-1.5">
+                        <div className="flex justify-between">
+                          <span>Unit Production Cost:</span>
+                          <span className="text-stone-900">₹{pricePerUnit} / pouch</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Cylinder Gravure Plates:</span>
+                          <span className="text-stone-900">₹{cylFee.toLocaleString()}</span>
+                        </div>
+                        <div className="flex justify-between border-t border-stone-200 pt-1.5 font-bold">
+                          <span className="text-stone-800">Estimated Total (FOB):</span>
+                          <span className="text-[#2E7D32]">₹{totalCost.toLocaleString('en-IN')}</span>
+                        </div>
+                      </div>
+                    );
+                  })()}
+                </div>
+              </div>
+
+              {/* Center Column - Real-time custom bag vector simulator */}
+              <div className="lg:col-span-4 flex flex-col items-center justify-center p-6 bg-stone-900 rounded-3xl border border-stone-800 relative min-h-[420px] shadow-2xl">
+                
+                {/* Simulated Pouch Render */}
+                <div className="relative w-56 h-80 rounded-2xl p-5 flex flex-col justify-between shadow-2xl overflow-hidden transition-all duration-500"
+                     style={{
+                       background: plMaterial.includes('Gold') ? 'linear-gradient(135deg, #CF9F3C 0%, #7C5C1A 100%)' :
+                                   plMaterial.includes('Kraft') ? 'linear-gradient(135deg, #1A472A 0%, #0C2B14 100%)' :
+                                   plMaterial.includes('Charcoal') ? 'linear-gradient(135deg, #2A2A2A 0%, #151515 100%)' :
+                                   'linear-gradient(135deg, #D95420 0%, #7E2A0B 100%)',
+                       color: plMaterial.includes('Kraft') || plMaterial.includes('Charcoal') ? '#FFFDF9' : '#111111'
+                     }}>
+                  
+                  {/* Glossy Overlay Shading */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/10 pointer-events-none"></div>
+                  
+                  {/* Top Seal Seam */}
+                  <div className="absolute top-0 inset-x-0 h-4 border-b border-black/10 flex items-center justify-center"
+                       style={{ background: 'repeating-linear-gradient(90deg, transparent, transparent 4px, rgba(0,0,0,0.15) 4px, rgba(0,0,0,0.15) 8px)' }}>
+                  </div>
+
+                  {/* Top Header details */}
+                  <div className="pt-3 text-center space-y-0.5 relative z-10">
+                    <span className="text-[7px] font-bold uppercase tracking-widest opacity-80 font-mono">Certified Premium Organic</span>
+                    <div className="w-6 h-[0.5px] bg-current opacity-40 mx-auto"></div>
+                  </div>
+
+                  {/* Pouch Main Logo brand name */}
+                  <div className="text-center py-4 space-y-1 relative z-10">
+                    <span className="text-xs font-serif font-extrabold tracking-wider uppercase block truncate max-w-[180px]">
+                      {plBrandName || 'MY BRAND'}
+                    </span>
+                    <div className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-black/10 border border-white/10 rounded-full">
+                      <Sparkles className="w-2.5 h-2.5 text-[#D4AF37]" />
+                      <span className="text-[6px] font-bold uppercase tracking-widest text-[#D4AF37]">Premium grade</span>
+                    </div>
+                  </div>
+
+                  {/* Bottom half details: flavor and makhana graphic */}
+                  <div className="space-y-2 text-center relative z-10">
+                    
+                    {/* Simulated white puffed makhana drawing */}
+                    <div className="w-14 h-14 bg-white/95 rounded-full mx-auto flex items-center justify-center shadow-md relative border border-white/50">
+                      <div className="w-10 h-10 bg-[#F4EDE2] rounded-full flex items-center justify-center border border-dashed border-stone-300">
+                        <Sparkles className="w-4 h-4 text-[#CF9F3C]" />
+                      </div>
+                      {/* Fluffy makhana bounds */}
+                      <span className="absolute -top-1 w-3 h-3 bg-white rounded-full"></span>
+                      <span className="absolute -bottom-1 w-3 h-3 bg-white rounded-full"></span>
+                      <span className="absolute -left-1.5 w-3.5 h-3.5 bg-white rounded-full"></span>
+                      <span className="absolute -right-1 w-3.5 h-3.5 bg-white rounded-full"></span>
+                    </div>
+
+                    <div className="space-y-0.5">
+                      <span className="text-[10px] font-sans font-bold uppercase block tracking-wider text-[#D4AF37]">
+                        {plFlavor}
+                      </span>
+                      <span className="text-[8px] font-mono opacity-85 block tracking-widest font-semibold">
+                        Gourmet Fox Nuts • {plSize.split(' ')[0]} Net Weight
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Bottom pouch seal */}
+                  <div className="absolute bottom-0 inset-x-0 h-4 border-t border-black/10 flex items-center justify-center"
+                       style={{ background: 'repeating-linear-gradient(90deg, transparent, transparent 4px, rgba(0,0,0,0.15) 4px, rgba(0,0,0,0.15) 8px)' }}>
+                  </div>
+                </div>
+
+                <span className="text-[10px] text-stone-400 font-mono mt-4">Real-time dynamic pouch simulator v1.2</span>
+              </div>
+
+              {/* Right Column - Submission Request form */}
+              <div className="lg:col-span-3 bg-white border border-amber-100 rounded-3xl p-6">
+                <h3 className="font-serif text-base font-bold text-stone-900 mb-2 border-b border-stone-100 pb-2">2. Register Brand RFQ</h3>
+                <p className="text-[11px] text-stone-400 mb-4 font-sans leading-normal">Submit your customized parameters. Leads feed into the partner CMS dashboard for custom container quote clearings.</p>
+
+                {plSuccess ? (
+                  <div className="p-4 bg-[#2E7D32]/10 border border-[#2E7D32]/20 text-[#2E7D32] rounded-2xl text-center space-y-2">
+                    <CheckSquare className="w-7 h-7 mx-auto text-[#D4AF37]" />
+                    <span className="block text-xs font-bold uppercase tracking-wider">OEM RFQ Registered!</span>
+                    <p className="text-[10px] text-stone-500 font-sans leading-normal">Our production manager is reviewing your cylinder setup parameters. Quotation dispatched to your email.</p>
+                  </div>
+                ) : (
+                  <form onSubmit={(e) => {
+                    e.preventDefault();
+                    if (!plName || !plCompany || !plEmail) return;
+                    
+                    // Inject custom request into bulkEnquiries state to show integration!
+                    const newPLInquiry: BulkEnquiry = {
+                      id: `PL-${Math.floor(100 + Math.random() * 900)}`,
+                      name: plName,
+                      companyName: plCompany,
+                      email: plEmail,
+                      phone: plPhone || '+91 93107 30291',
+                      role: 'Corporate',
+                      quantityRequired: `${plQty.toLocaleString()} units of Private Label`,
+                      message: `[Private Label RFQ Configured] Foil Theme: ${plMaterial}, Sizing: ${plSize}, Flavor: ${plFlavor}. Estimated units: ${plQty}. Brand Name: ${plBrandName}.`,
+                      date: new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }).replace(/\s/g, '-'),
+                      status: 'New'
+                    };
+                    setBulkEnquiries([newPLInquiry, ...bulkEnquiries]);
+                    setPlSuccess(true);
+                    setPlName('');
+                    setPlCompany('');
+                    setPlEmail('');
+                    setPlPhone('');
+                    setTimeout(() => setPlSuccess(false), 9000);
+                  }} className="space-y-3.5 text-xs font-semibold text-stone-700">
+                    <div>
+                      <label className="block text-stone-500 uppercase mb-1">Contact Name</label>
+                      <input
+                        type="text"
+                        value={plName}
+                        onChange={(e) => setPlName(e.target.value)}
+                        placeholder="e.g. Johnathan Miller"
+                        className="w-full p-2 bg-[#F8F5F0] border border-stone-200 rounded-lg outline-none focus:border-[#2E7D32]"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-stone-500 uppercase mb-1">Company / Retail Brand</label>
+                      <input
+                        type="text"
+                        value={plCompany}
+                        onChange={(e) => setPlCompany(e.target.value)}
+                        placeholder="e.g. Healthy Snacks Inc."
+                        className="w-full p-2 bg-[#F8F5F0] border border-stone-200 rounded-lg outline-none focus:border-[#2E7D32]"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-stone-500 uppercase mb-1">Business Email address</label>
+                      <input
+                        type="email"
+                        value={plEmail}
+                        onChange={(e) => setPlEmail(e.target.value)}
+                        placeholder="e.g. jmiller@healthysnacks.com"
+                        className="w-full p-2 bg-[#F8F5F0] border border-stone-200 rounded-lg outline-none focus:border-[#2E7D32]"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-stone-500 uppercase mb-1">WhatsApp Sourcing Phone</label>
+                      <input
+                        type="tel"
+                        value={plPhone}
+                        onChange={(e) => setPlPhone(e.target.value)}
+                        placeholder="e.g. +1 415 908 1142"
+                        className="w-full p-2 bg-[#F8F5F0] border border-stone-200 rounded-lg outline-none focus:border-[#2E7D32]"
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="w-full py-3 bg-[#2E7D32] hover:bg-emerald-800 text-white font-bold text-xs rounded-xl shadow cursor-pointer transition-transform duration-300 hover:scale-[1.01]"
+                    >
+                      ✓ Request Custom Quote
+                    </button>
+                  </form>
+                )}
+              </div>
+
+            </div>
+          </div>
+        )}
+
+        {/* VIEW 15: CUSTOMER DASHBOARD */}
+        {activeView === 'dashboard' && (
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+            
+            {/* Upper Stats Card Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              <div className="p-5 bg-white border border-amber-100 rounded-3xl space-y-1 shadow-sm">
+                <span className="text-[10px] font-mono font-bold text-[#2E7D32] uppercase tracking-wider block">Total Lifetime spendings</span>
+                <div className="flex items-baseline gap-1 text-stone-900">
+                  <span className="text-xl sm:text-2xl font-extrabold">₹{(1990 + orders.reduce((sum, o) => sum + o.totalAmount, 0)).toLocaleString()}</span>
+                  <span className="text-[10px] text-stone-400 font-semibold font-sans">INR</span>
+                </div>
+              </div>
+              <div className="p-5 bg-white border border-amber-100 rounded-3xl space-y-1 shadow-sm">
+                <span className="text-[10px] font-mono font-bold text-[#2E7D32] uppercase tracking-wider block">Active Carrier Shipments</span>
+                <div className="flex items-baseline gap-1 text-stone-900">
+                  <span className="text-xl sm:text-2xl font-extrabold">{orders.filter(o => o.status !== 'Delivered').length || '1'} Active</span>
+                </div>
+              </div>
+              <div className="p-5 bg-[#2E7D32]/10 border border-[#2E7D32]/20 rounded-3xl space-y-1 shadow-sm">
+                <span className="text-[10px] font-mono font-bold text-[#2E7D32] uppercase tracking-wider block">Eco Carbon Offset Score</span>
+                <div className="flex items-baseline gap-1.5 text-[#2E7D32]">
+                  <Leaf className="w-5 h-5 text-[#D4AF37] animate-pulse" />
+                  <span className="text-xl sm:text-2xl font-extrabold">{3 + orders.length} Trees Funded</span>
+                </div>
+              </div>
+              <div className="p-5 bg-white border border-amber-100 rounded-3xl space-y-1 shadow-sm">
+                <span className="text-[10px] font-mono font-bold text-[#2E7D32] uppercase tracking-wider block">Direct Loyalty Points</span>
+                <div className="flex items-baseline gap-1 text-[#2E7D32]">
+                  <Gift className="w-5 h-5 text-[#D4AF37]" />
+                  <span className="text-xl sm:text-2xl font-extrabold">{250 + Math.round(orders.reduce((sum, o) => sum + (o.totalAmount * 0.1), 0))} Points</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+              
+              {/* Left Column: Active tracking status & Recent orders list */}
+              <div className="lg:col-span-8 space-y-8">
+                
+                {/* Active Tracking Step timeline */}
+                <div className="p-6 bg-white border border-amber-100 rounded-3xl space-y-6 shadow-sm">
+                  <div className="flex justify-between items-center border-b border-stone-100 pb-3">
+                    <span className="text-xs font-bold text-stone-800 uppercase tracking-wide">Live Carrier Delivery shipment tracker</span>
+                    <span className="bg-[#2E7D32]/10 text-[#2E7D32] text-[9px] uppercase font-mono font-bold px-2 py-0.5 rounded-full">Cargo ID: FMT-94821</span>
+                  </div>
+
+                  <div className="grid grid-cols-5 text-center text-[10px] font-bold text-stone-400 font-sans relative">
+                    <div className="space-y-2 relative z-10">
+                      <div className="w-6 h-6 rounded-full bg-[#2E7D32] text-white flex items-center justify-center mx-auto shadow font-mono text-[9px]">✓</div>
+                      <span className="text-[#2E7D32] block">Order placed</span>
+                    </div>
+                    <div className="space-y-2 relative z-10">
+                      <div className="w-6 h-6 rounded-full bg-[#2E7D32] text-white flex items-center justify-center mx-auto shadow font-mono text-[9px]">✓</div>
+                      <span className="text-[#2E7D32] block">Darbhanga Sourcing</span>
+                    </div>
+                    <div className="space-y-2 relative z-10">
+                      <div className="w-6 h-6 rounded-full bg-[#2E7D32] text-white flex items-center justify-center mx-auto shadow font-mono text-[9px]">✓</div>
+                      <span className="text-[#2E7D32] block">Graded & Cleaned</span>
+                    </div>
+                    <div className="space-y-2 relative z-10">
+                      <div className="w-6 h-6 rounded-full bg-[#D4AF37] text-white flex items-center justify-center mx-auto shadow font-mono text-[9px] animate-pulse">🚚</div>
+                      <span className="text-[#D4AF37] block">Dispatch Cargo Hub</span>
+                    </div>
+                    <div className="space-y-2 relative z-10 opacity-40">
+                      <div className="w-6 h-6 rounded-full bg-stone-200 text-stone-600 flex items-center justify-center mx-auto shadow font-mono text-[9px]">5</div>
+                      <span className="block">Delivered Target</span>
+                    </div>
+
+                    {/* Timeline slider background rail */}
+                    <div className="absolute top-3 left-[10%] right-[10%] h-[2px] bg-stone-100 -z-0"></div>
+                    <div className="absolute top-3 left-[10%] w-[60%] h-[2px] bg-[#2E7D32] -z-0"></div>
+                  </div>
+                </div>
+
+                {/* Orders table list */}
+                <div className="p-6 bg-white border border-amber-100 rounded-3xl space-y-4 shadow-sm">
+                  <h3 className="font-serif text-lg font-bold text-stone-900 border-b border-stone-100 pb-2">Purchase History & Styled Receipts</h3>
+                  
+                  <div className="space-y-3">
+                    {orders.map((order) => (
+                      <div key={order.id} className="p-4 bg-[#F8F5F0] border border-stone-200 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <span className="font-serif font-bold text-stone-900 text-sm">Order #{order.id}</span>
+                            <span className={`text-[9px] font-bold font-mono px-2 py-0.5 rounded uppercase ${order.status === 'Delivered' ? 'bg-emerald-100 text-[#2E7D32]' : 'bg-amber-100 text-[#D4AF37]'}`}>
+                              {order.status}
+                            </span>
+                          </div>
+                          <span className="text-[10px] text-stone-400 font-semibold uppercase block">Date: {order.date} • Total units: {order.items.reduce((sum, i) => sum + i.quantity, 0)} • {order.paymentMethod}</span>
+                        </div>
+
+                        <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+                          <span className="font-bold text-[#2E7D32] text-sm">₹{order.totalAmount.toLocaleString('en-IN')}</span>
+                          
+                          {/* Printable Invoice PDF trigger */}
+                          <button
+                            onClick={() => {
+                              setPlacedOrder(order);
+                              setCheckoutStep('placed');
+                              setActiveView('checkout');
+                            }}
+                            className="px-3.5 py-1.5 bg-stone-900 hover:bg-stone-950 text-white font-bold text-[10px] rounded-xl shadow cursor-pointer transition-all uppercase tracking-wide flex items-center gap-1"
+                          >
+                            <FileText className="w-3.5 h-3.5 text-[#D4AF37]" /> View Invoice PDF
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Right Column: Address Profile management */}
+              <div className="lg:col-span-4 bg-white border border-amber-100 rounded-3xl p-6 space-y-4 shadow-sm">
+                <h3 className="font-serif text-base font-bold text-stone-900 border-b border-stone-100 pb-2">User Profile & Dispatch Address</h3>
+                
+                <div className="space-y-3.5 text-xs font-semibold text-stone-700">
+                  <div>
+                    <label className="block text-stone-400 uppercase mb-1">Full Delivery Name</label>
+                    <input
+                      type="text"
+                      value={checkoutName}
+                      onChange={(e) => setCheckoutName(e.target.value)}
+                      className="w-full p-2 bg-[#F8F5F0] border border-stone-200 rounded-lg outline-none focus:border-[#2E7D32]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-stone-400 uppercase mb-1">Delivery Address</label>
+                    <input
+                      type="text"
+                      value={checkoutAddress}
+                      onChange={(e) => setCheckoutAddress(e.target.value)}
+                      className="w-full p-2 bg-[#F8F5F0] border border-stone-200 rounded-lg outline-none focus:border-[#2E7D32]"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-stone-400 uppercase mb-1">City, State</label>
+                      <input
+                        type="text"
+                        value={checkoutCity}
+                        onChange={(e) => setCheckoutCity(e.target.value)}
+                        className="w-full p-2 bg-[#F8F5F0] border border-stone-200 rounded-lg outline-none focus:border-[#2E7D32]"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-stone-400 uppercase mb-1">Pincode PIN</label>
+                      <input
+                        type="text"
+                        value={checkoutPincode}
+                        onChange={(e) => setCheckoutPincode(e.target.value)}
+                        className="w-full p-2 bg-[#F8F5F0] border border-stone-200 rounded-lg outline-none focus:border-[#2E7D32]"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-stone-400 uppercase mb-1">Phone Number Helpline</label>
+                    <input
+                      type="text"
+                      value={checkoutPhone}
+                      onChange={(e) => setCheckoutPhone(e.target.value)}
+                      className="w-full p-2 bg-[#F8F5F0] border border-stone-200 rounded-lg outline-none focus:border-[#2E7D32]"
+                    />
+                  </div>
+
+                  <div className="pt-2">
+                    <button
+                      onClick={() => alert('Default dispatch address updated in browser secure state registry!')}
+                      className="w-full py-2.5 bg-[#2E7D32] hover:bg-emerald-800 text-white rounded-xl font-bold text-[10px] uppercase tracking-wider cursor-pointer"
+                    >
+                      ✓ Update Default Address
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        )}
+
+        {/* VIEW 16: CONTACT & LIVE CONCIERGE CHAT SUPPORT */}
+        {activeView === 'contact' && (
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+            
+            {/* Header */}
+            <div className="text-center max-w-xl mx-auto space-y-2">
+              <span className="text-xs font-bold text-[#2E7D32] uppercase tracking-widest block">Operational Sourcing desk</span>
+              <h2 className="font-serif text-2xl md:text-3.5xl font-extrabold text-[#111111]">Get in Touch With Us</h2>
+              <p className="text-xs text-stone-500">Contact our Darbhanga sourcing headquarter or chat with our automated concierge agent for instant quotations.</p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+              
+              {/* Left Column: Contact cards & vector simulated map */}
+              <div className="lg:col-span-4 space-y-6">
+                
+                {/* Sourcing card */}
+                <div className="p-5 bg-white border border-amber-100 rounded-3xl space-y-4 shadow-sm font-sans text-xs font-medium text-stone-600">
+                  <h4 className="font-serif text-sm font-bold text-stone-900 border-b border-stone-100 pb-2 flex items-center gap-2">
+                    <MapPin className="w-4.5 h-4.5 text-[#D4AF37]" /> Sourcing Headquarters
+                  </h4>
+                  <div className="space-y-3">
+                    <div className="flex gap-2.5">
+                      <MapPin className="w-5 h-5 text-[#2E7D32] flex-shrink-0" />
+                      <div>
+                        <strong>Bihar Sourcing Hub:</strong>
+                        <span className="block text-stone-400 mt-0.5">Plot No. 12, Sourcing Union Gali, Darbhanga Court Road, Bihar - 846004</span>
+                      </div>
+                    </div>
+                    <div className="flex gap-2.5 border-t border-stone-100 pt-3">
+                      <Phone className="w-5 h-5 text-[#2E7D32] flex-shrink-0" />
+                      <div>
+                        <strong>Helpline Sourcing:</strong>
+                        <span className="block text-[#2E7D32] font-bold mt-0.5">+91 93107 30291</span>
+                      </div>
+                    </div>
+                    <div className="flex gap-2.5 border-t border-stone-100 pt-3">
+                      <Globe className="w-5 h-5 text-[#2E7D32] flex-shrink-0" />
+                      <div>
+                        <strong>Corporate Mail:</strong>
+                        <span className="block text-stone-900 font-bold mt-0.5">farmingonuts@gmail.com</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Simulated illustration map */}
+                <div className="p-5 bg-stone-900 text-white rounded-3xl border border-stone-800 flex flex-col justify-between shadow-lg relative overflow-hidden h-[180px]">
+                  {/* Glowing routes */}
+                  <div className="absolute top-1/2 left-1/4 w-2 h-2 bg-emerald-500 rounded-full animate-ping"></div>
+                  <div className="absolute top-1/3 left-2/3 w-2 h-2 bg-amber-500 rounded-full animate-ping"></div>
+                  
+                  <div className="relative z-10 space-y-1">
+                    <span className="text-[10px] font-mono text-[#D4AF37] uppercase tracking-widest block">Global Trading Logistics</span>
+                    <h5 className="font-serif font-bold text-sm">Direct Mithila Marine Routes</h5>
+                    <p className="text-[10px] text-stone-400 leading-relaxed font-sans max-w-[210px]">Ventilated maritime container routes from Mumbai cargo hub straight to Europe, USA, and East Asia docks.</p>
+                  </div>
+                  
+                  <span className="text-[9px] uppercase tracking-widest font-bold text-[#2E7D32] font-mono block relative z-10 mt-2">✓ Phytosanitary Certified</span>
+                </div>
+
+              </div>
+
+              {/* Middle Column: Chat Concierge Desk */}
+              <div className="lg:col-span-5 bg-white border border-amber-100 rounded-3xl flex flex-col justify-between shadow-md overflow-hidden min-h-[460px]">
+                
+                {/* Chat header */}
+                <div className="px-5 py-4 bg-[#111111] text-white flex items-center justify-between border-b border-stone-800">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
+                    <span className="font-serif text-sm tracking-wide font-bold">Farmingo Nuts Chat Concierge</span>
+                  </div>
+                  <span className="text-[9px] text-stone-400 uppercase font-mono tracking-wider">Type queries below</span>
+                </div>
+
+                {/* Chat window body */}
+                <div className="flex-grow p-4 space-y-3.5 overflow-y-auto max-h-[300px] min-h-[220px]">
+                  {chatMessages.map((msg, idx) => (
+                    <div key={idx} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+                      <div className={`p-3 rounded-2xl text-xs max-w-[80%] leading-relaxed ${msg.sender === 'user' ? 'bg-[#2E7D32] text-white rounded-tr-none' : 'bg-[#F8F5F0] text-stone-800 rounded-tl-none border border-stone-200 font-medium'}`}>
+                        {msg.text}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Quick select pills */}
+                <div className="px-4 py-2 border-t border-stone-100 flex flex-wrap gap-1.5 bg-[#FFFDF9]">
+                  {[
+                    { q: 'Minimum export MOQ?', a: 'Our standard maritime export MOQ is 500 kg (100 multi-wall woven sacks) or 10,000 custom units of Private Label packaging.' },
+                    { q: 'How are Sutas sorted?', a: 'Raw makhana lotus seeds are sun-dried and graded using steel mechanical sieves into 4 Suta, 5 Suta, 6 Suta, and 7 Suta Jumbo grades with absolutely zero chlorine bleaching.' },
+                    { q: 'Where are nuts grown?', a: 'Our fox nuts are harvested in chest-deep waters from muddy ecological wetlands in Darbhanga and Madhubani district of Bihar, India by 1,200 grower members.' }
+                  ].map((pill, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => {
+                        // User clicks, feeds response instantly
+                        const userMsg = { sender: 'user' as const, text: pill.q };
+                        const aiMsg = { sender: 'ai' as const, text: pill.a };
+                        setChatMessages((prev) => [...prev, userMsg, aiMsg]);
+                      }}
+                      className="px-2 py-1 bg-amber-50 hover:bg-[#2E7D32]/10 border border-[#2E7D32]/20 rounded-full text-[9px] font-bold text-[#2E7D32] cursor-pointer"
+                    >
+                      {pill.q}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Chat input form footer */}
+                <form onSubmit={(e) => {
+                  e.preventDefault();
+                  if (!chatInput) return;
+                  const userMsg = { sender: 'user' as const, text: chatInput };
+                  
+                  // Standard fallback responder
+                  let reply = `Thank you for your inquiry about "${chatInput}". To coordinate direct wholesales container sheets, let us register a call. Kindly call our sourcing helpline at +91 93107 30291 or submit an RFQ.`;
+                  if (chatInput.toLowerCase().includes('moq') || chatInput.toLowerCase().includes('bulk')) {
+                    reply = 'Our standard export container MOQ is 500kg or 10,000 retail private-label packaging bags. Custom container rates are coordinated from Darbhanga.';
+                  } else if (chatInput.toLowerCase().includes('suta') || chatInput.toLowerCase().includes('size')) {
+                    reply = 'Our seeds are graded into 4, 5, 6 Suta, and Jumbo 7 Suta. Larger sizes are preferred for premium gourmet popping and packaging uniform crunch.';
+                  } else if (chatInput.toLowerCase().includes('recipe') || chatInput.toLowerCase().includes('cook')) {
+                    reply = 'Learn our Royal Makhana Kheer sweet pudding or Cast-iron Cast Roasted Makhana snacks recipes on our Wholesome Recipes section!';
+                  }
+
+                  const aiMsg = { sender: 'ai' as const, text: reply };
+                  setChatMessages((prev) => [...prev, userMsg, aiMsg]);
+                  setChatInput('');
+                }} className="p-3 border-t border-stone-100 flex gap-2">
+                  <input
+                    type="text"
+                    value={chatInput}
+                    onChange={(e) => setChatInput(e.target.value)}
+                    placeholder="Ask about shipping, Suta size, or private labeling..."
+                    className="flex-grow p-2.5 bg-[#F8F5F0] border border-stone-200 rounded-xl text-xs outline-none focus:border-[#2E7D32]"
+                  />
+                  <button
+                    type="submit"
+                    className="px-4 py-2 bg-stone-900 hover:bg-stone-950 text-white font-bold text-xs rounded-xl cursor-pointer"
+                  >
+                    Send
+                  </button>
+                </form>
+              </div>
+
+              {/* Right Column: Instant ticket inquiry form */}
+              <div className="lg:col-span-3 bg-white border border-amber-100 rounded-3xl p-5 shadow-sm">
+                <h3 className="font-serif text-base font-bold text-stone-900 border-b border-stone-100 pb-2">Operational Ticketing</h3>
+                <p className="text-[10px] text-stone-400 mb-4 font-sans leading-normal">Submit immediate ticket messages. Tickets synchronize into our customer assistance database queue.</p>
+
+                {plSuccess ? (
+                  <div className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold rounded-2xl text-center">
+                    ✓ Ticket Dispatched successfully!
+                  </div>
+                ) : (
+                  <form onSubmit={(e) => {
+                    e.preventDefault();
+                    setPlSuccess(true);
+                    setTimeout(() => setPlSuccess(false), 8000);
+                  }} className="space-y-3.5 text-xs font-semibold text-stone-700">
+                    <div>
+                      <label className="block text-stone-500 uppercase mb-1">Your Full Name</label>
+                      <input type="text" required className="w-full p-2 bg-[#F8F5F0] border border-stone-200 rounded-lg outline-none focus:border-[#2E7D32]" />
+                    </div>
+                    <div>
+                      <label className="block text-stone-500 uppercase mb-1">Email Address</label>
+                      <input type="email" required className="w-full p-2 bg-[#F8F5F0] border border-stone-200 rounded-lg outline-none focus:border-[#2E7D32]" />
+                    </div>
+                    <div>
+                      <label className="block text-stone-500 uppercase mb-1">Ticket Message</label>
+                      <textarea required rows={4} className="w-full p-2 bg-[#F8F5F0] border border-stone-200 rounded-lg outline-none focus:border-[#2E7D32]" placeholder="Describe your query..."></textarea>
+                    </div>
+
+                    <button type="submit" className="w-full py-2.5 bg-[#2E7D32] hover:bg-emerald-800 text-white rounded-xl font-bold uppercase tracking-wider text-[10px] cursor-pointer">
+                      Submit Ticket
+                    </button>
+                  </form>
+                )}
+              </div>
+
+            </div>
           </div>
         )}
 
@@ -1861,20 +3384,6 @@ export default function App() {
           similarProducts={shopProducts.filter(p => p.category === selectedProduct.category && p.id !== selectedProduct.id)}
         />
       )}
-
-      {/* CMS Admin Panel */}
-      <AdminPanel
-        isOpen={adminOpen}
-        onClose={() => setAdminOpen(false)}
-        orders={orders}
-        onUpdateOrderStatus={handleUpdateOrderStatus}
-        bulkEnquiries={bulkEnquiries}
-        onReplyBulk={handleReplyBulk}
-        exportEnquiries={exportEnquiries}
-        onReplyExport={handleReplyExport}
-        customProducts={shopProducts}
-        onUpdateProductStock={handleUpdateProductStock}
-      />
 
     </div>
   );

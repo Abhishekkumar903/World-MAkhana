@@ -31,6 +31,7 @@ export interface Product {
   weightOptions: string[]; // ['100g', '250g', '500g', '1kg']
   isBestSeller?: boolean;
   isTodayDeal?: boolean;
+  subcategory?: string;
 }
 
 export interface Review {

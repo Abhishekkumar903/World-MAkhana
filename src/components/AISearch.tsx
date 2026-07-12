@@ -165,7 +165,7 @@ export default function AISearch({ isOpen, onClose, onSelectProduct }: AISearchP
           <div className="flex items-center justify-between px-6 py-4 border-b border-amber-100 bg-[#111111] text-white">
             <div className="flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-[#D4AF37] animate-pulse" />
-              <span className="font-serif text-lg tracking-wider font-semibold">Makhana World Intelligent AI Search</span>
+              <span className="font-serif text-lg tracking-wider font-semibold">Farmingo Nuts Intelligent AI Search</span>
             </div>
             <button onClick={handleClose} className="p-1 rounded-full hover:bg-white/10 transition-colors">
               <X className="w-6 h-6 text-gray-300" />
@@ -326,7 +326,7 @@ export default function AISearch({ isOpen, onClose, onSelectProduct }: AISearchP
                     <Sparkles className="w-4 h-4 text-[#D4AF37]" />
                   </div>
                   <div>
-                    <h5 className="text-xs font-bold text-[#2E7D32] uppercase tracking-wider mb-1">Makhana World AI Sommelier Advice</h5>
+                    <h5 className="text-xs font-bold text-[#2E7D32] uppercase tracking-wider mb-1">Farmingo Nuts AI Sommelier Advice</h5>
                     <p className="text-sm text-stone-800 leading-relaxed font-sans">
                       {aiResponse.split('**').map((piece, i) => i % 2 === 1 ? <strong key={i} className="text-[#2E7D32] font-semibold">{piece}</strong> : piece)}
                     </p>
