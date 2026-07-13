@@ -80,7 +80,7 @@ export default function Header({
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => { onNavigate('home'); setMobileMenuOpen(false); }}>
             <div className="w-11 h-11 rounded-full overflow-hidden shadow border border-amber-200 relative bg-amber-50">
               <img 
-                src="/src/assets/images/farmingo_nuts_logo_1783843254906.jpg" 
+                src="/assets/images/farmingo_nuts_logo_1783843254906.jpg" 
                 alt="Farmingo Nuts Logo" 
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
@@ -338,8 +338,8 @@ export default function Header({
 
           <div className="border-t border-amber-100/60 pt-3 flex flex-col gap-2 pl-4 text-xs">
             <span className="text-stone-500 font-semibold">Active direct support lines:</span>
-            <a href="tel:+919430260869" className="text-[#2E7D32] hover:underline font-extrabold flex items-center gap-1">
-              📞 Call Sourcing Hub (+91 94302 60869)
+            <a href="tel:+919310730291" className="text-[#2E7D32] hover:underline font-extrabold flex items-center gap-1">
+              📞 Call Sourcing Hub (+91 93107 30291)
             </a>
           </div>
         </div>

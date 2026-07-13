@@ -43,7 +43,7 @@ export default function Footer({ onNavigate }: FooterProps) {
             <div className="flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-full overflow-hidden shadow border border-stone-800 bg-stone-900">
                 <img 
-                  src="/src/assets/images/farmingo_nuts_logo_1783843254906.jpg" 
+                  src="/assets/images/farmingo_nuts_logo_1783843254906.jpg" 
                   alt="Farmingo Nuts Logo" 
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
@@ -63,10 +63,10 @@ export default function Footer({ onNavigate }: FooterProps) {
                 <MapPin className="w-4 h-4 text-[#D4AF37]" /> Sourcing Hub: Phase-2, Plot No. GH-01A, Sector-16 Noida, Greater Noida, Uttar Pradesh 201009
               </span>
               <span className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-[#D4AF37]" /> export@farmingonuts.com
+                <Mail className="w-4 h-4 text-[#D4AF37]" /> Info@farmingonuts.com
               </span>
               <span className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-[#D4AF37]" /> WhatsApp Hotline: +91 94302 60869
+                <Phone className="w-4 h-4 text-[#D4AF37]" /> WhatsApp Hotline: +91 93107 30291
               </span>
             </div>
           </div>

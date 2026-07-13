@@ -638,7 +638,7 @@ export default function App() {
               {/* Mockup Background Image */}
               <div className="absolute inset-0 w-full h-full z-0 select-none pointer-events-none">
                 <img 
-                  src="/src/assets/images/farmingo_luxury_hero_1783858291837.jpg" 
+                  src="/assets/images/farmingo_luxury_hero_1783858291837.jpg" 
                   alt="Farmingo Nuts Premium Background" 
                   className="w-full h-full object-cover object-center"
                   referrerPolicy="no-referrer"
@@ -784,7 +784,7 @@ export default function App() {
                   {[
                     {
                       name: 'Raw Makhana',
-                      image: '/src/assets/images/raw_makhana_jumbo_1781940261968.jpg',
+                      image: '/assets/images/raw_makhana_jumbo_1781940261968.jpg',
                       onClick: () => {
                         setShopCategory('raw');
                         setShopSubcategory('all');
@@ -795,7 +795,7 @@ export default function App() {
                     },
                     {
                       name: 'Roasted Makhana',
-                      image: '/src/assets/images/roasted_makhana_golden_1781940274693.jpg',
+                      image: '/assets/images/roasted_makhana_golden_1781940274693.jpg',
                       onClick: () => {
                         setShopCategory('raw');
                         setShopSubcategory('roasted-raw');
@@ -806,7 +806,7 @@ export default function App() {
                     },
                     {
                       name: 'Flavoured Makhana',
-                      image: '/src/assets/images/cheese_makhana_cheddar_1781940285526.jpg',
+                      image: '/assets/images/cheese_makhana_cheddar_1781940285526.jpg',
                       onClick: () => {
                         setShopCategory('roasted');
                         setShopSubcategory('all');
@@ -889,7 +889,7 @@ export default function App() {
                     mrp: 260,
                     rating: 4.9,
                     reviewsCount: 142,
-                    image: '/src/assets/images/classic_makhana_pouch_1783860782473.jpg'
+                    image: '/assets/images/classic_makhana_pouch_1783860782473.jpg'
                   },
                   {
                     id: 'roasted-pink-salt',
@@ -899,7 +899,7 @@ export default function App() {
                     mrp: 285,
                     rating: 4.9,
                     reviewsCount: 167,
-                    image: '/src/assets/images/himalayan_makhana_pouch_1783861060681.jpg'
+                    image: '/assets/images/himalayan_makhana_pouch_1783861060681.jpg'
                   },
                   {
                     id: 'roasted-peri-peri',
@@ -909,7 +909,7 @@ export default function App() {
                     mrp: 295,
                     rating: 4.7,
                     reviewsCount: 322,
-                    image: '/src/assets/images/peri_peri_makhana_pouch_1783861321396.jpg'
+                    image: '/assets/images/peri_peri_makhana_pouch_1783861321396.jpg'
                   },
                   {
                     id: 'roasted-cheese',
@@ -919,7 +919,7 @@ export default function App() {
                     mrp: 295,
                     rating: 4.8,
                     reviewsCount: 245,
-                    image: '/src/assets/images/cheese_makhana_pouch_1783861925140.jpg'
+                    image: '/assets/images/cheese_makhana_pouch_1783861925140.jpg'
                   },
                   {
                     id: 'roasted-pudina-mint',
@@ -929,7 +929,7 @@ export default function App() {
                     mrp: 285,
                     rating: 4.7,
                     reviewsCount: 142,
-                    image: '/src/assets/images/mint_makhana_pouch_1783862500660.jpg'
+                    image: '/assets/images/mint_makhana_pouch_1783862500660.jpg'
                   },
                   {
                     id: 'roasted-combo-pack',
@@ -939,7 +939,7 @@ export default function App() {
                     mrp: 999,
                     rating: 4.9,
                     reviewsCount: 382,
-                    image: '/src/assets/images/combo_makhana_pouch_1783862785114.jpg'
+                    image: '/assets/images/combo_makhana_pouch_1783862785114.jpg'
                   }
                 ].map((card, idx) => {
                   const targetProduct = shopProducts.find(p => p.id === card.id);
@@ -2390,7 +2390,7 @@ export default function App() {
                 <FileText className="w-5 h-5 text-[#D4AF37]" /> Refund & Cancellation Policy
               </h3>
               <p className="font-medium">
-                Our food products are prepared fresh and sun-dried immediately after water lily harvest. To guarantee maximum cellular protection and hygiene standards, edible items cannot be returned post-delivery unless there is a physical seal rupture or transportation package crash. If there is transit defect, email photos to farmingonuts@gmail.com within 24 Hours for a full refund or express replacement box.
+                Our food products are prepared fresh and sun-dried immediately after water lily harvest. To guarantee maximum cellular protection and hygiene standards, edible items cannot be returned post-delivery unless there is a physical seal rupture or transportation package crash. If there is transit defect, email photos to Info@farmingonuts.com within 24 Hours for a full refund or express replacement box.
               </p>
             </section>
 
@@ -2450,17 +2450,17 @@ export default function App() {
                   {
                     id: 'raw',
                     name: 'Raw Makhana',
-                    image: '/src/assets/images/raw_makhana_jumbo_1781940261968.jpg'
+                    image: '/assets/images/raw_makhana_jumbo_1781940261968.jpg'
                   },
                   {
                     id: 'roasted',
                     name: 'Roasted Makhana',
-                    image: '/src/assets/images/roasted_makhana_golden_1781940274693.jpg'
+                    image: '/assets/images/roasted_makhana_golden_1781940274693.jpg'
                   },
                   {
                     id: 'flavored',
                     name: 'Flavoured Makhana',
-                    image: '/src/assets/images/cheese_makhana_cheddar_1781940285526.jpg'
+                    image: '/assets/images/cheese_makhana_cheddar_1781940285526.jpg'
                   },
                   {
                     id: 'organic',
@@ -2540,12 +2540,12 @@ export default function App() {
                   let list = [];
                   if (selectedCategoryTab === 'best-sellers') {
                     list = [
-                      { id: 'roasted-plain-raw', displayName: 'Premium Classic Makhana (100g)', price: 199, mrp: 260, rating: 4.9, reviewsCount: 142, image: '/src/assets/images/classic_makhana_pouch_1783860782473.jpg' },
-                      { id: 'roasted-pink-salt', displayName: 'Himalayan Salt Makhana (100g)', price: 219, mrp: 285, rating: 4.9, reviewsCount: 167, image: '/src/assets/images/himalayan_makhana_pouch_1783861060681.jpg' },
-                      { id: 'roasted-peri-peri', displayName: 'Peri Peri Makhana (100g)', price: 229, mrp: 295, rating: 4.7, reviewsCount: 322, image: '/src/assets/images/peri_peri_makhana_pouch_1783861321396.jpg' },
-                      { id: 'roasted-cheese', displayName: 'Cheese Makhana (100g)', price: 229, mrp: 295, rating: 4.8, reviewsCount: 245, image: '/src/assets/images/cheese_makhana_pouch_1783861925140.jpg' },
-                      { id: 'roasted-pudina-mint', displayName: 'Mint Makhana (100g)', price: 219, mrp: 285, rating: 4.7, reviewsCount: 142, image: '/src/assets/images/mint_makhana_pouch_1783862500660.jpg' },
-                      { id: 'roasted-combo-pack', displayName: 'Premium Combo Pack (4 x 100g)', price: 799, mrp: 999, rating: 4.9, reviewsCount: 382, image: '/src/assets/images/combo_makhana_pouch_1783862785114.jpg' }
+                      { id: 'roasted-plain-raw', displayName: 'Premium Classic Makhana (100g)', price: 199, mrp: 260, rating: 4.9, reviewsCount: 142, image: '/assets/images/classic_makhana_pouch_1783860782473.jpg' },
+                      { id: 'roasted-pink-salt', displayName: 'Himalayan Salt Makhana (100g)', price: 219, mrp: 285, rating: 4.9, reviewsCount: 167, image: '/assets/images/himalayan_makhana_pouch_1783861060681.jpg' },
+                      { id: 'roasted-peri-peri', displayName: 'Peri Peri Makhana (100g)', price: 229, mrp: 295, rating: 4.7, reviewsCount: 322, image: '/assets/images/peri_peri_makhana_pouch_1783861321396.jpg' },
+                      { id: 'roasted-cheese', displayName: 'Cheese Makhana (100g)', price: 229, mrp: 295, rating: 4.8, reviewsCount: 245, image: '/assets/images/cheese_makhana_pouch_1783861925140.jpg' },
+                      { id: 'roasted-pudina-mint', displayName: 'Mint Makhana (100g)', price: 219, mrp: 285, rating: 4.7, reviewsCount: 142, image: '/assets/images/mint_makhana_pouch_1783862500660.jpg' },
+                      { id: 'roasted-combo-pack', displayName: 'Premium Combo Pack (4 x 100g)', price: 799, mrp: 999, rating: 4.9, reviewsCount: 382, image: '/assets/images/combo_makhana_pouch_1783862785114.jpg' }
                     ];
                   } else {
                     // Pull actual products from PRODUCTS array dynamically matching the category filter
@@ -2576,7 +2576,7 @@ export default function App() {
                       mrp: p.mrp,
                       rating: p.rating,
                       reviewsCount: p.reviewsCount,
-                      image: p.images[0] || '/src/assets/images/roasted_makhana_golden_1781940274693.jpg'
+                      image: p.images[0] || '/assets/images/roasted_makhana_golden_1781940274693.jpg'
                     }));
                   }
 
@@ -3213,7 +3213,7 @@ export default function App() {
                       <Globe className="w-5 h-5 text-[#2E7D32] flex-shrink-0" />
                       <div>
                         <strong>Corporate Mail:</strong>
-                        <span className="block text-stone-900 font-bold mt-0.5">farmingonuts@gmail.com</span>
+                        <span className="block text-stone-900 font-bold mt-0.5">Info@farmingonuts.com</span>
                       </div>
                     </div>
                   </div>

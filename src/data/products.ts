@@ -161,7 +161,7 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 65,
     stockStatus: 'In Stock',
     images: [
-      '/src/assets/images/classic_makhana_pouch_1783860782473.jpg'
+      '/assets/images/classic_makhana_pouch_1783860782473.jpg'
     ],
     ingredients: ['Popped Fox Nuts', 'Organic Cold-Pressed Rice Bran Oil (0.5%)'],
     benefits: ['Zero artificial salt or sugar', '100% allergen-free and clean', 'Ultimate dietary versatility'],
@@ -193,7 +193,7 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 322,
     stockStatus: 'In Stock',
     images: [
-      '/src/assets/images/peri_peri_makhana_pouch_1783861321396.jpg'
+      '/assets/images/peri_peri_makhana_pouch_1783861321396.jpg'
     ],
     ingredients: ['Popped Fox Nuts', 'Extra Virgin Olive Oil', 'Peri Peri Spice Blend', 'Dehydrated Garlic', 'Lemon Dust'],
     benefits: ['Metabolism boosting capsaicin', 'Rich in plant-based trace minerals', 'No MSG or artificial colors'],
@@ -223,7 +223,7 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 245,
     stockStatus: 'In Stock',
     images: [
-      '/src/assets/images/cheese_makhana_pouch_1783861925140.jpg'
+      '/assets/images/cheese_makhana_pouch_1783861925140.jpg'
     ],
     ingredients: ['Popped Fox Nuts', 'Cold-Pressed Sunflower Oil', 'Natural Cheddar Cheese Powder', 'Sea Salt', 'Yeast Extract'],
     benefits: ['High calcium calcium multiplier', 'Kid-friendly healthy clean snacker', 'Rich in essential amino acids'],
@@ -283,7 +283,7 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 142,
     stockStatus: 'In Stock',
     images: [
-      '/src/assets/images/mint_makhana_pouch_1783862500660.jpg'
+      '/assets/images/mint_makhana_pouch_1783862500660.jpg'
     ],
     ingredients: ['Popped Fox Nuts', 'Rice Bran Oil', 'Dried Mint Leaves Powder', 'Lemon Peel Powder', 'Black Salt'],
     benefits: ['Aromatic refreshing taste', 'Low-fat high-fiber digestives', 'Rich in natural organic iron'],
@@ -373,7 +373,7 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 202,
     stockStatus: 'In Stock',
     images: [
-      '/src/assets/images/himalayan_makhana_pouch_1783861060681.jpg'
+      '/assets/images/himalayan_makhana_pouch_1783861060681.jpg'
     ],
     ingredients: ['Popped Fox Nuts', 'Virgin Olive Oil (1.5%)', 'Himalayan Pink Salt Crystals'],
     benefits: ['Extremely low sodium mineralized profile', 'Perfect keto and diabetic breakfast snack', 'Clean detox diet snacker'],
@@ -493,7 +493,7 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 382,
     stockStatus: 'In Stock',
     images: [
-      '/src/assets/images/combo_makhana_pouch_1783862785114.jpg'
+      '/assets/images/combo_makhana_pouch_1783862785114.jpg'
     ],
     sutaSize: 'Combo Pack',
     ingredients: ['Genuine Popped Fox Nuts', 'Extra Virgin Olive Oil', 'Buttermilk solids', 'Real Spices & Seasonings'],
