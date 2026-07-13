@@ -80,7 +80,7 @@ export default function Header({
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => { onNavigate('home'); setMobileMenuOpen(false); }}>
             <div className="w-11 h-11 rounded-full overflow-hidden shadow border border-amber-200 relative bg-amber-50">
               <img 
-                src="./assets/images/farmingo_nuts_logo_1783843254906.jpg" 
+                src="/assets/images/farmingo_nuts_logo_1783843254906.jpg" 
                 alt="Farmingo Nuts Logo" 
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"

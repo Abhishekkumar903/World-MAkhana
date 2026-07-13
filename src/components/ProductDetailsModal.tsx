@@ -116,8 +116,8 @@ export default function ProductDetailsModal({
   // 360 degree spin images mock
   const anglesImages = [
     product.images[0],
-    product.images[1] || './assets/images/raw_makhana_jumbo_1781940261968.jpg',
-    './assets/images/roasted_makhana_golden_1781940274693.jpg'
+    product.images[1] || '/assets/images/raw_makhana_jumbo_1781940261968.jpg',
+    '/assets/images/roasted_makhana_golden_1781940274693.jpg'
   ];
 
   const handleShare = () => {
