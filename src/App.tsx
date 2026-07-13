@@ -638,7 +638,7 @@ export default function App() {
               {/* Mockup Background Image */}
               <div className="absolute inset-0 w-full h-full z-0 select-none pointer-events-none">
                 <img 
-                  src="/assets/images/farmingo_luxury_hero_1783858291837.jpg?v=3" 
+                  src="./assets/images/farmingo_luxury_hero_1783858291837.jpg?v=3" 
                   alt="Farmingo Nuts Premium Background" 
                   className="w-full h-full object-cover object-center"
                   referrerPolicy="no-referrer"
@@ -784,7 +784,7 @@ export default function App() {
                   {[
                     {
                       name: 'Raw Makhana',
-                      image: '/assets/images/raw_makhana_jumbo_1781940261968.jpg?v=3',
+                      image: './assets/images/raw_makhana_jumbo_1781940261968.jpg?v=3',
                       onClick: () => {
                         setShopCategory('raw');
                         setShopSubcategory('all');
@@ -795,7 +795,7 @@ export default function App() {
                     },
                     {
                       name: 'Roasted Makhana',
-                      image: '/assets/images/roasted_makhana_golden_1781940274693.jpg?v=3',
+                      image: './assets/images/roasted_makhana_golden_1781940274693.jpg?v=3',
                       onClick: () => {
                         setShopCategory('raw');
                         setShopSubcategory('roasted-raw');
@@ -806,7 +806,7 @@ export default function App() {
                     },
                     {
                       name: 'Flavoured Makhana',
-                      image: '/assets/images/cheese_makhana_cheddar_1781940285526.jpg?v=3',
+                      image: './assets/images/cheese_makhana_cheddar_1781940285526.jpg?v=3',
                       onClick: () => {
                         setShopCategory('roasted');
                         setShopSubcategory('all');
@@ -817,7 +817,7 @@ export default function App() {
                     },
                     {
                       name: 'Organic Makhana',
-                      image: '/assets/images/suta_6_makhana_1781947102519.jpg?v=3',
+                      image: './assets/images/suta_6_makhana_1781947102519.jpg?v=3',
                       onClick: () => {
                         setShopCategory('raw');
                         setShopSubcategory('organic-raw');
@@ -889,7 +889,7 @@ export default function App() {
                     mrp: 260,
                     rating: 4.9,
                     reviewsCount: 142,
-                    image: '/assets/images/classic_makhana_pouch_1783860782473.jpg?v=3'
+                    image: './assets/images/classic_makhana_pouch_1783860782473.jpg?v=3'
                   },
                   {
                     id: 'roasted-pink-salt',
@@ -899,7 +899,7 @@ export default function App() {
                     mrp: 285,
                     rating: 4.9,
                     reviewsCount: 167,
-                    image: '/assets/images/himalayan_makhana_pouch_1783861060681.jpg?v=3'
+                    image: './assets/images/himalayan_makhana_pouch_1783861060681.jpg?v=3'
                   },
                   {
                     id: 'roasted-peri-peri',
@@ -909,7 +909,7 @@ export default function App() {
                     mrp: 295,
                     rating: 4.7,
                     reviewsCount: 322,
-                    image: '/assets/images/peri_peri_makhana_pouch_1783861321396.jpg?v=3'
+                    image: './assets/images/peri_peri_makhana_pouch_1783861321396.jpg?v=3'
                   },
                   {
                     id: 'roasted-cheese',
@@ -919,7 +919,7 @@ export default function App() {
                     mrp: 295,
                     rating: 4.8,
                     reviewsCount: 245,
-                    image: '/assets/images/cheese_makhana_pouch_1783861925140.jpg?v=3'
+                    image: './assets/images/cheese_makhana_pouch_1783861925140.jpg?v=3'
                   },
                   {
                     id: 'roasted-pudina-mint',
@@ -929,7 +929,7 @@ export default function App() {
                     mrp: 285,
                     rating: 4.7,
                     reviewsCount: 142,
-                    image: '/assets/images/mint_makhana_pouch_1783862500660.jpg?v=3'
+                    image: './assets/images/mint_makhana_pouch_1783862500660.jpg?v=3'
                   },
                   {
                     id: 'roasted-combo-pack',
@@ -939,7 +939,7 @@ export default function App() {
                     mrp: 999,
                     rating: 4.9,
                     reviewsCount: 382,
-                    image: '/assets/images/combo_makhana_pouch_1783862785114.jpg?v=3'
+                    image: './assets/images/combo_makhana_pouch_1783862785114.jpg?v=3'
                   }
                 ].map((card, idx) => {
                   const targetProduct = shopProducts.find(p => p.id === card.id);
@@ -1073,7 +1073,7 @@ export default function App() {
                       suta: '4 Suta',
                       size: 'Medium (9mm - 11mm)',
                       desc: 'Ideal for everyday cooking, curries, and standard roasting.',
-                      img: '/assets/images/suta_4_makhana_1781947059850.jpg',
+                      img: './assets/images/suta_4_makhana_1781947059850.jpg',
                       gauge: '9mm - 11mm',
                       icon: (
                         <svg className="w-6 h-6 text-[#D4AF37]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -1085,7 +1085,7 @@ export default function App() {
                       suta: '5 Suta',
                       size: 'Large (11mm - 13mm)',
                       desc: 'Premium uniform size preferred for commercial popping and spices.',
-                      img: '/assets/images/suta_5_makhana_1781947090931.jpg',
+                      img: './assets/images/suta_5_makhana_1781947090931.jpg',
                       gauge: '11mm - 13mm',
                       icon: (
                         <svg className="w-6 h-6 text-[#D4AF37]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -1097,7 +1097,7 @@ export default function App() {
                       suta: '6 Suta',
                       size: 'Super Large (13mm - 15mm)',
                       desc: 'Selected large sized kernels offering incredible airy crunch.',
-                      img: '/assets/images/suta_6_makhana_1781947102519.jpg',
+                      img: './assets/images/suta_6_makhana_1781947102519.jpg',
                       gauge: '13mm - 15mm',
                       icon: (
                         <svg className="w-6 h-6 text-[#D4AF37]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -1110,7 +1110,7 @@ export default function App() {
                       suta: '7 Suta (Jumbo)',
                       size: 'Colossal (15mm+)',
                       desc: 'Supreme grade handpicked colossal kernels. Pure visual and culinary gold.',
-                      img: '/assets/images/suta_7_makhana_1781947116055.jpg',
+                      img: './assets/images/suta_7_makhana_1781947116055.jpg',
                       gauge: '15mm+',
                       icon: (
                         <svg className="w-6 h-6 text-[#D4AF37]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -1859,12 +1859,12 @@ export default function App() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
-                { title: 'Barefoot Aquatic Sweeping', desc: 'Sieving makhana seed follicles from the wetland silt.', img: '/assets/images/makhana_pond_harvest_1781940339830.jpg' },
-                { title: 'The Grading Gaanj', desc: 'Using age-old woven sieves to grade raw kernels into sizes (Sutas).', img: '/assets/images/makhana_sorting_quality_1781940352972.jpg' },
-                { title: 'Woodfired Thermal Popping', desc: 'Roasting in earthen kadhais followed by wooden mallet cracking.', img: '/assets/images/raw_makhana_jumbo_1781940261968.jpg' },
-                { title: 'Gourmet Olive Coating', desc: 'Tumbling colossal jumbo kernels under spice-mist cold spray.', img: '/assets/images/roasted_makhana_golden_1781940274693.jpg' },
-                { title: 'Multi-layer Oxygen Bags', desc: 'Double-bagging wholesale packs to block aquatic humidity.', img: '/assets/images/makhana_footer_pack_1781940382172.jpg' },
-                { title: 'Darbhanga Farmer Union', desc: 'Generational growers celebrating a fairtrade premium payout.', img: '/assets/images/makhana_export_warehouse_1781940369377.jpg' }
+                { title: 'Barefoot Aquatic Sweeping', desc: 'Sieving makhana seed follicles from the wetland silt.', img: './assets/images/makhana_pond_harvest_1781940339830.jpg' },
+                { title: 'The Grading Gaanj', desc: 'Using age-old woven sieves to grade raw kernels into sizes (Sutas).', img: './assets/images/makhana_sorting_quality_1781940352972.jpg' },
+                { title: 'Woodfired Thermal Popping', desc: 'Roasting in earthen kadhais followed by wooden mallet cracking.', img: './assets/images/raw_makhana_jumbo_1781940261968.jpg' },
+                { title: 'Gourmet Olive Coating', desc: 'Tumbling colossal jumbo kernels under spice-mist cold spray.', img: './assets/images/roasted_makhana_golden_1781940274693.jpg' },
+                { title: 'Multi-layer Oxygen Bags', desc: 'Double-bagging wholesale packs to block aquatic humidity.', img: './assets/images/makhana_footer_pack_1781940382172.jpg' },
+                { title: 'Darbhanga Farmer Union', desc: 'Generational growers celebrating a fairtrade premium payout.', img: './assets/images/makhana_export_warehouse_1781940369377.jpg' }
               ].map((grid, index) => (
                 <div key={index} className="bg-white rounded-2xl overflow-hidden border border-stone-100 shadow-sm hover:shadow-md transition-all duration-300">
                   <div className="h-48 relative bg-stone-50">
@@ -1901,7 +1901,7 @@ export default function App() {
 
               <div className="aspect-[4/3] rounded-2xl overflow-hidden relative shadow">
                 <img 
-                  src="/assets/images/makhana_pond_harvest_1781940339830.jpg" 
+                  src="./assets/images/makhana_pond_harvest_1781940339830.jpg" 
                   alt="Harvesting wetlands in Bihar" 
                   className="w-full h-full object-cover"
                 />
@@ -2450,22 +2450,22 @@ export default function App() {
                   {
                     id: 'raw',
                     name: 'Raw Makhana',
-                    image: '/assets/images/raw_makhana_jumbo_1781940261968.jpg'
+                    image: './assets/images/raw_makhana_jumbo_1781940261968.jpg'
                   },
                   {
                     id: 'roasted',
                     name: 'Roasted Makhana',
-                    image: '/assets/images/roasted_makhana_golden_1781940274693.jpg'
+                    image: './assets/images/roasted_makhana_golden_1781940274693.jpg'
                   },
                   {
                     id: 'flavored',
                     name: 'Flavoured Makhana',
-                    image: '/assets/images/cheese_makhana_cheddar_1781940285526.jpg'
+                    image: './assets/images/cheese_makhana_cheddar_1781940285526.jpg'
                   },
                   {
                     id: 'organic',
                     name: 'Organic Makhana',
-                    image: '/assets/images/suta_6_makhana_1781947102519.jpg'
+                    image: './assets/images/suta_6_makhana_1781947102519.jpg'
                   }
                 ].map((cat) => {
                   const isActive = selectedCategoryTab === cat.id;
@@ -2540,12 +2540,12 @@ export default function App() {
                   let list = [];
                   if (selectedCategoryTab === 'best-sellers') {
                     list = [
-                      { id: 'roasted-plain-raw', displayName: 'Premium Classic Makhana (100g)', price: 199, mrp: 260, rating: 4.9, reviewsCount: 142, image: '/assets/images/classic_makhana_pouch_1783860782473.jpg' },
-                      { id: 'roasted-pink-salt', displayName: 'Himalayan Salt Makhana (100g)', price: 219, mrp: 285, rating: 4.9, reviewsCount: 167, image: '/assets/images/himalayan_makhana_pouch_1783861060681.jpg' },
-                      { id: 'roasted-peri-peri', displayName: 'Peri Peri Makhana (100g)', price: 229, mrp: 295, rating: 4.7, reviewsCount: 322, image: '/assets/images/peri_peri_makhana_pouch_1783861321396.jpg' },
-                      { id: 'roasted-cheese', displayName: 'Cheese Makhana (100g)', price: 229, mrp: 295, rating: 4.8, reviewsCount: 245, image: '/assets/images/cheese_makhana_pouch_1783861925140.jpg' },
-                      { id: 'roasted-pudina-mint', displayName: 'Mint Makhana (100g)', price: 219, mrp: 285, rating: 4.7, reviewsCount: 142, image: '/assets/images/mint_makhana_pouch_1783862500660.jpg' },
-                      { id: 'roasted-combo-pack', displayName: 'Premium Combo Pack (4 x 100g)', price: 799, mrp: 999, rating: 4.9, reviewsCount: 382, image: '/assets/images/combo_makhana_pouch_1783862785114.jpg' }
+                      { id: 'roasted-plain-raw', displayName: 'Premium Classic Makhana (100g)', price: 199, mrp: 260, rating: 4.9, reviewsCount: 142, image: './assets/images/classic_makhana_pouch_1783860782473.jpg' },
+                      { id: 'roasted-pink-salt', displayName: 'Himalayan Salt Makhana (100g)', price: 219, mrp: 285, rating: 4.9, reviewsCount: 167, image: './assets/images/himalayan_makhana_pouch_1783861060681.jpg' },
+                      { id: 'roasted-peri-peri', displayName: 'Peri Peri Makhana (100g)', price: 229, mrp: 295, rating: 4.7, reviewsCount: 322, image: './assets/images/peri_peri_makhana_pouch_1783861321396.jpg' },
+                      { id: 'roasted-cheese', displayName: 'Cheese Makhana (100g)', price: 229, mrp: 295, rating: 4.8, reviewsCount: 245, image: './assets/images/cheese_makhana_pouch_1783861925140.jpg' },
+                      { id: 'roasted-pudina-mint', displayName: 'Mint Makhana (100g)', price: 219, mrp: 285, rating: 4.7, reviewsCount: 142, image: './assets/images/mint_makhana_pouch_1783862500660.jpg' },
+                      { id: 'roasted-combo-pack', displayName: 'Premium Combo Pack (4 x 100g)', price: 799, mrp: 999, rating: 4.9, reviewsCount: 382, image: './assets/images/combo_makhana_pouch_1783862785114.jpg' }
                     ];
                   } else {
                     // Pull actual products from PRODUCTS array dynamically matching the category filter
@@ -2576,7 +2576,7 @@ export default function App() {
                       mrp: p.mrp,
                       rating: p.rating,
                       reviewsCount: p.reviewsCount,
-                      image: p.images[0] || '/assets/images/roasted_makhana_golden_1781940274693.jpg'
+                      image: p.images[0] || './assets/images/roasted_makhana_golden_1781940274693.jpg'
                     }));
                   }
 

@@ -33,8 +33,8 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 124,
     stockStatus: 'In Stock',
     images: [
-      '/assets/images/suta_4_makhana_1781947059850.jpg',
-      '/assets/images/raw_makhana_jumbo_1781940261968.jpg'
+      './assets/images/suta_4_makhana_1781947059850.jpg',
+      './assets/images/raw_makhana_jumbo_1781940261968.jpg'
     ],
     sutaSize: '4 Suta',
     ingredients: ['100% Raw Fox Nuts (Euryale Ferox)'],
@@ -65,8 +65,8 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 198,
     stockStatus: 'In Stock',
     images: [
-      '/assets/images/suta_5_makhana_1781947090931.jpg',
-      '/assets/images/raw_makhana_jumbo_1781940261968.jpg'
+      './assets/images/suta_5_makhana_1781947090931.jpg',
+      './assets/images/raw_makhana_jumbo_1781940261968.jpg'
     ],
     sutaSize: '5 Suta',
     ingredients: ['100% Genuine Raw Mithila Fox Nuts'],
@@ -97,8 +97,8 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 86,
     stockStatus: 'In Stock',
     images: [
-      '/assets/images/suta_6_makhana_1781947102519.jpg',
-      '/assets/images/raw_makhana_jumbo_1781940261968.jpg'
+      './assets/images/suta_6_makhana_1781947102519.jpg',
+      './assets/images/raw_makhana_jumbo_1781940261968.jpg'
     ],
     sutaSize: '6 Suta',
     ingredients: ['100% Premium Raw Fox Nuts'],
@@ -129,8 +129,8 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 142,
     stockStatus: 'Low Stock',
     images: [
-      '/assets/images/suta_7_makhana_1781947116055.jpg',
-      '/assets/images/raw_makhana_jumbo_1781940261968.jpg'
+      './assets/images/suta_7_makhana_1781947116055.jpg',
+      './assets/images/raw_makhana_jumbo_1781940261968.jpg'
     ],
     sutaSize: '7 Suta (Jumbo)',
     ingredients: ['100% Organic Giant Fox Nuts'],
@@ -161,7 +161,7 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 65,
     stockStatus: 'In Stock',
     images: [
-      '/assets/images/classic_makhana_pouch_1783860782473.jpg'
+      './assets/images/classic_makhana_pouch_1783860782473.jpg'
     ],
     ingredients: ['Popped Fox Nuts', 'Organic Cold-Pressed Rice Bran Oil (0.5%)'],
     benefits: ['Zero artificial salt or sugar', '100% allergen-free and clean', 'Ultimate dietary versatility'],
@@ -193,7 +193,7 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 322,
     stockStatus: 'In Stock',
     images: [
-      '/assets/images/peri_peri_makhana_pouch_1783861321396.jpg'
+      './assets/images/peri_peri_makhana_pouch_1783861321396.jpg'
     ],
     ingredients: ['Popped Fox Nuts', 'Extra Virgin Olive Oil', 'Peri Peri Spice Blend', 'Dehydrated Garlic', 'Lemon Dust'],
     benefits: ['Metabolism boosting capsaicin', 'Rich in plant-based trace minerals', 'No MSG or artificial colors'],
@@ -223,7 +223,7 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 245,
     stockStatus: 'In Stock',
     images: [
-      '/assets/images/cheese_makhana_pouch_1783861925140.jpg'
+      './assets/images/cheese_makhana_pouch_1783861925140.jpg'
     ],
     ingredients: ['Popped Fox Nuts', 'Cold-Pressed Sunflower Oil', 'Natural Cheddar Cheese Powder', 'Sea Salt', 'Yeast Extract'],
     benefits: ['High calcium calcium multiplier', 'Kid-friendly healthy clean snacker', 'Rich in essential amino acids'],
@@ -253,7 +253,7 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 112,
     stockStatus: 'In Stock',
     images: [
-      '/assets/images/suta_4_makhana_1781947059850.jpg'
+      './assets/images/suta_4_makhana_1781947059850.jpg'
     ],
     ingredients: ['Popped Fox Nuts', 'Rice Bran Oil', 'Buttermilk Powder', 'Onion Powder', 'Dehydrated Chives', 'Lactic Acid'],
     benefits: ['Naturally low fat content', 'Great source of healthy dietary fibers', 'Prebiotic-friendly seasonings'],
@@ -283,7 +283,7 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 142,
     stockStatus: 'In Stock',
     images: [
-      '/assets/images/mint_makhana_pouch_1783862500660.jpg'
+      './assets/images/mint_makhana_pouch_1783862500660.jpg'
     ],
     ingredients: ['Popped Fox Nuts', 'Rice Bran Oil', 'Dried Mint Leaves Powder', 'Lemon Peel Powder', 'Black Salt'],
     benefits: ['Aromatic refreshing taste', 'Low-fat high-fiber digestives', 'Rich in natural organic iron'],
@@ -313,7 +313,7 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 154,
     stockStatus: 'In Stock',
     images: [
-      '/assets/images/suta_4_makhana_1781947059850.jpg'
+      './assets/images/suta_4_makhana_1781947059850.jpg'
     ],
     ingredients: ['Popped Fox Nuts', 'Cold-Pressed Sunflower Oil', 'Tomato Powder', 'Sweet Basil Extract', 'Spices'],
     benefits: ['Rich in lycopene antioxidants', 'Vitamins A & C source', 'Naturally low calories'],
@@ -343,7 +343,7 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 167,
     stockStatus: 'In Stock',
     images: [
-      '/assets/images/suta_4_makhana_1781947059850.jpg'
+      './assets/images/suta_4_makhana_1781947059850.jpg'
     ],
     ingredients: ['Popped Fox Nuts', 'Olive Oil', 'Cracked Black Pepper', 'Sea Salt Flakes', 'Dry Ginger'],
     benefits: ['Supports digestion and fat burning', 'Anti-inflammatory pepper piperine', 'Zero processed synthetic chemicals'],
@@ -373,7 +373,7 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 202,
     stockStatus: 'In Stock',
     images: [
-      '/assets/images/himalayan_makhana_pouch_1783861060681.jpg'
+      './assets/images/himalayan_makhana_pouch_1783861060681.jpg'
     ],
     ingredients: ['Popped Fox Nuts', 'Virgin Olive Oil (1.5%)', 'Himalayan Pink Salt Crystals'],
     benefits: ['Extremely low sodium mineralized profile', 'Perfect keto and diabetic breakfast snack', 'Clean detox diet snacker'],
@@ -403,7 +403,7 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 119,
     stockStatus: 'In Stock',
     images: [
-      '/assets/images/suta_6_makhana_1781947102519.jpg'
+      './assets/images/suta_6_makhana_1781947102519.jpg'
     ],
     ingredients: ['Popped Fox Nuts', 'Rice Bran Oil', 'Roasted Garlic Powder', 'Guntur Red Chilli', 'Onion Dust', 'Chaat Masala'],
     benefits: ['Garlic allicin cardiac booster', 'Immune supportive spices', 'Low carbohydrate snacking'],
@@ -433,7 +433,7 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 98,
     stockStatus: 'In Stock',
     images: [
-      '/assets/images/suta_4_makhana_1781947059850.jpg'
+      './assets/images/suta_4_makhana_1781947059850.jpg'
     ],
     ingredients: ['Popped Fox Nuts', 'Olive Oil', 'Smoked Paprika', 'BBQ Seasoning', 'Honey Solids', 'Natural Smoke Flavor'],
     benefits: ['Unique savory-sweet profile', '100% cholesterol-free', 'Rich in phosphorus and magnesium'],
@@ -463,7 +463,7 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 289,
     stockStatus: 'In Stock',
     images: [
-      '/assets/images/suta_4_makhana_1781947059850.jpg'
+      './assets/images/suta_4_makhana_1781947059850.jpg'
     ],
     ingredients: ['Popped Fox Nuts', 'A2 Cow Ghee (0.8%)', 'Spicy Masala Seasoning (Amchur, Cumin, Clove, Cardamom, Salt)'],
     benefits: ['Boosts metabolic thermogenesis', 'Satiating classic street-style flavor', 'Rich in natural antioxidants'],
@@ -493,7 +493,7 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 382,
     stockStatus: 'In Stock',
     images: [
-      '/assets/images/combo_makhana_pouch_1783862785114.jpg'
+      './assets/images/combo_makhana_pouch_1783862785114.jpg'
     ],
     sutaSize: 'Combo Pack',
     ingredients: ['Genuine Popped Fox Nuts', 'Extra Virgin Olive Oil', 'Buttermilk solids', 'Real Spices & Seasonings'],
@@ -526,7 +526,7 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 42,
     stockStatus: 'In Stock',
     images: [
-      '/assets/images/makhana_export_warehouse_1781940369377.jpg'
+      './assets/images/makhana_export_warehouse_1781940369377.jpg'
     ],
     sutaSize: '6 Suta Bulk',
     ingredients: ['100% Pure Raw Popped Lotus Seeds'],
@@ -576,7 +576,7 @@ export const RECIPES: Recipe[] = [
   {
     id: 'roasted-basic',
     name: 'Perfect Everyday Crispy Roasted Makhana',
-    image: '/assets/images/roasted_makhana_golden_1781940274693.jpg',
+    image: './assets/images/roasted_makhana_golden_1781940274693.jpg',
     time: '10 Mins',
     difficulty: 'Easy',
     servings: 2,
@@ -631,7 +631,7 @@ export const BLOGS: BlogArticle[] = [
     title: 'The Superfood Science of Fox Nuts (Makhana): Nutritional Breakdown',
     excerpt: 'Why nutritionists worldwide are calling Makhana the unmatched ancient snack of the 21st century. Discover its glycemic, cardiac, and mineral benefits.',
     content: 'For centuries, makhana (fox nuts or lotus seeds) have been harvested from the wetlands of Bihar, India. But what once was a humble local treat has risen to global prominence. Science now confirms what ancient Ayurveda holds: fox nuts are a dietary powerhouse.\n\n### High Protein & Low Calorie Satiety\nCompared to commercial snacks like potato chips, air-popped popcorn, or fried grains, makhana provides high protein content (nearly 10g per 100g) while containing minimal fat. A single cup of makhana contains about 80 calories, making it a stellar snack to manage mid-day cravings on strict calorie-budget diets.\n\n### Low Glycemic Index & Low Sodium\nMakhana is an excellent food for diabetic patients. With a low glycemic index (GI), it slowly releases carbohydrates as glucose into the bloodstream, avoiding insulin spikes. Furthermore, they contain high magnesium (which improves oxygen flow and cardiovascular performance) and very low sodium, perfect to regulate blood pressure values.\n\n### Anti-Aging Flavonoids\nFox nuts contain kaempferol, a powerful natural flavonoid that exhibits robust anti-inflammatory and anti-aging properties. Regular consumption aids in cell repair and blocks free radical cellular oxidation.',
-    image: '/assets/images/makhana_sorting_quality_1781940352972.jpg',
+    image: './assets/images/makhana_sorting_quality_1781940352972.jpg',
     author: 'Dr. Shruti Jha, Chief Clinical Nutritionist',
     date: 'June 12, 2026',
     readTime: '6 min read',
@@ -643,7 +643,7 @@ export const BLOGS: BlogArticle[] = [
     title: 'From Muddy Ponds to Premium Jars: The Ancient Mithila Harvest',
     excerpt: 'Trace the incredible manual labor, ecological resilience, and wood-fired thermal cracking that brings Makhana from Bihar to global dining tables.',
     content: 'Nearly 90% of the world’s makhana crop originates from Bihar, specifically the Mithila region. The journey of these white crispy seeds is one of the most labor-intensive agricultural processes on Earth, relying on traditional skills passed down through generations.\n\n### Harvesting Under the Water\nThe seeds of Euryale Ferox (the purple-blossoming fox lotus) grow at the muddy bottom of deep marshy ponds. In October, skilled harvesters wade into chest-deep waters, sweep the floor with bamboo screens (called "Gaanj"), and gather the dark, gravel-like seeds from the silt.\n\n### The Sun Drying & Grade Sorting\nOnce gathered, the black seeds are scrubbed thoroughly to wash off the slimy outer mud layers. They are sun-dried on traditional jute bags. The dried seeds are then manually graded through iron sieves—sorting them into "Sutas" (1 to 7) based on size density.\n\n### The Thermal Climax: Roasting and Wooden Cracking\nTo pop the seeds, they are roasted in dry earthen pots over manual wood fires in batches. When heated to a strict thermal temperature, the hard black shell is placed on a wooden board and struck with a heavy wooden mallet ("Thapi"). Instantly, the kernel pops open with a gunshot sound, shedding its black hull and transforming into a snowy-white, airy puffed makhana shell. This is immediately bagged to prevent moisture re-absorption. At Farmingo Nuts, we buy directly from these farmers, guaranteeing clean fair-wage income and pure organic crop standards.',
-    image: '/assets/images/makhana_pond_harvest_1781940339830.jpg',
+    image: './assets/images/makhana_pond_harvest_1781940339830.jpg',
     author: 'Amitabh Mishra, Rural Sourcing Lead',
     date: 'May 28, 2026',
     readTime: '8 min read',
