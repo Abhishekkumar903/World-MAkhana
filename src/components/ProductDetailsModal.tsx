@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { Product, CartItem } from '../types';
 import { PRODUCTS } from '../data/products';
+import { getAssetUrl } from '../utils/assetHelper';
 
 interface ProductDetailsModalProps {
   product: Product;
@@ -115,9 +116,9 @@ export default function ProductDetailsModal({
 
   // 360 degree spin images mock
   const anglesImages = [
-    product.images[0],
-    product.images[1] || '/assets/images/raw_makhana_jumbo_1781940261968.jpg',
-    '/assets/images/roasted_makhana_golden_1781940274693.jpg'
+    getAssetUrl(product.images[0]),
+    getAssetUrl(product.images[1] || '/assets/images/raw_makhana_jumbo_1781940261968.jpg'),
+    getAssetUrl('/assets/images/roasted_makhana_golden_1781940274693.jpg')
   ];
 
   const handleShare = () => {
@@ -246,7 +247,7 @@ export default function ProductDetailsModal({
                     onMouseLeave={handleMouseLeave}
                   >
                     <img 
-                      src={product.images[activeImageIdx]} 
+                      src={getAssetUrl(product.images[activeImageIdx])} 
                       alt={product.name} 
                       style={zoomStyle}
                       className="w-full h-full object-cover transition-transform duration-100 ease-out"
@@ -267,7 +268,7 @@ export default function ProductDetailsModal({
                     }}
                     className={`w-16 h-16 rounded-xl border-2 overflow-hidden flex-shrink-0 transition-all cursor-pointer ${idx === activeImageIdx && !view360 ? 'border-[#2E7D32] scale-105 shadow-sm' : 'border-stone-100 hover:border-amber-200'}`}
                   >
-                    <img src={img} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                    <img src={getAssetUrl(img)} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                   </button>
                 ))}
                 {/* 360 thumb */}
@@ -569,11 +570,11 @@ export default function ProductDetailsModal({
                 <div className="flex flex-wrap md:flex-nowrap items-center gap-4 justify-between">
                   <div className="flex items-center gap-3">
                     <div className="w-12 h-12 bg-white rounded-lg overflow-hidden border border-amber-100 flex-shrink-0">
-                      <img src={product.images[0]} alt="" className="w-full h-full object-cover" />
+                      <img src={getAssetUrl(product.images[0])} alt="" className="w-full h-full object-cover" />
                     </div>
                     <span className="text-xl text-[#2E7D32] font-semibold font-serif">+</span>
                     <div className="w-12 h-12 bg-white rounded-lg overflow-hidden border border-amber-100 flex-shrink-0">
-                      <img src={addonProduct.images[0]} alt="" className="w-full h-full object-cover" />
+                      <img src={getAssetUrl(addonProduct.images[0])} alt="" className="w-full h-full object-cover" />
                     </div>
                     <div>
                       <h6 className="text-xs font-bold text-stone-800 line-clamp-1">
@@ -649,7 +650,7 @@ export default function ProductDetailsModal({
                     className="group bg-white p-2.5 border border-stone-100 rounded-2xl cursor-pointer hover:border-amber-200 transition-all shadow-sm"
                   >
                     <div className="aspect-square bg-stone-50 rounded-xl overflow-hidden mb-2.5">
-                      <img src={item.images[0]} alt={item.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                      <img src={getAssetUrl(item.images[0])} alt={item.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                     </div>
                     <span className="text-[9px] font-extrabold text-stone-400 uppercase tracking-widest block mb-1">
                       {item.category}

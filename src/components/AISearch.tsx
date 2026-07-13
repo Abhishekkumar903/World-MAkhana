@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import { Search, Mic, X, Sparkles, SlidersHorizontal, ArrowRight, ShieldCheck, Check } from 'lucide-react';
 import { Product } from '../types';
 import { PRODUCTS } from '../data/products';
+import { getAssetUrl } from '../utils/assetHelper';
 
 interface AISearchProps {
   isOpen: boolean;
@@ -382,7 +383,7 @@ export default function AISearch({ isOpen, onClose, onSelectProduct }: AISearchP
                     >
                       <div className="w-20 h-20 bg-stone-50 rounded-xl overflow-hidden flex-shrink-0 border border-stone-100">
                         <img
-                          src={product.images[0]}
+                          src={getAssetUrl(product.images[0])}
                           alt={product.name}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           referrerPolicy="no-referrer"

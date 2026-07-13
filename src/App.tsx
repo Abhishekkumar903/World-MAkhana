@@ -21,6 +21,7 @@ import Footer from './components/Footer';
 import AISearch from './components/AISearch';
 import ProductDetailsModal from './components/ProductDetailsModal';
 import { motion } from 'motion/react';
+import { getAssetUrl } from './utils/assetHelper';
 
 const categoryTree = [
   {
@@ -638,7 +639,7 @@ export default function App() {
               {/* Mockup Background Image */}
               <div className="absolute inset-0 w-full h-full z-0 select-none pointer-events-none">
                 <img 
-                  src="/assets/images/farmingo_luxury_hero_1783858291837.jpg?v=3" 
+                  src={getAssetUrl("/assets/images/farmingo_luxury_hero_1783858291837.jpg?v=3")} 
                   alt="Farmingo Nuts Premium Background" 
                   className="w-full h-full object-cover object-center"
                   referrerPolicy="no-referrer"
@@ -835,7 +836,7 @@ export default function App() {
                       {/* Round Circle Wrapper with custom shadow and golden border */}
                       <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full overflow-hidden border border-amber-100 bg-stone-50 p-1.5 shadow-sm group-hover:shadow-md group-hover:border-[#2E7D32]/45 transition-all duration-300">
                         <img
-                          src={cat.image}
+                          src={getAssetUrl(cat.image)}
                           alt={cat.name}
                           className="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500"
                           referrerPolicy="no-referrer"
@@ -959,7 +960,7 @@ export default function App() {
                         className="aspect-square bg-stone-50 rounded-2xl overflow-hidden relative cursor-pointer group border border-stone-50/50"
                       >
                         <img
-                          src={card.image}
+                          src={getAssetUrl(card.image)}
                           alt={card.displayName}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           referrerPolicy="no-referrer"
@@ -1123,7 +1124,7 @@ export default function App() {
                       {/* Image container */}
                       <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-stone-100 bg-stone-50 shadow-sm mb-6">
                         <img 
-                          src={spec.img} 
+                          src={getAssetUrl(spec.img)} 
                           alt={spec.suta} 
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                           referrerPolicy="no-referrer"
@@ -1305,7 +1306,7 @@ export default function App() {
                       onClick={() => handleSelectProductFromList(product)}
                     >
                       <img 
-                        src={product.images[0]} 
+                        src={getAssetUrl(product.images[0])} 
                         alt={product.name} 
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         referrerPolicy="no-referrer"
@@ -1791,7 +1792,7 @@ export default function App() {
                       </div>
 
                       <div className="aspect-video w-full rounded-2xl overflow-hidden shadow">
-                        <img src={article.image} alt="" className="w-full h-full object-cover" />
+                        <img src={getAssetUrl(article.image)} alt="" className="w-full h-full object-cover" />
                       </div>
 
                       <div className="text-sm font-sans text-stone-700 leading-relaxed space-y-4 prose max-w-none">
@@ -1812,7 +1813,7 @@ export default function App() {
                   <div key={article.id} className="bg-white border border-stone-100 rounded-2xl overflow-hidden flex flex-col justify-between shadow-sm group">
                     <div>
                       <div className="h-44 bg-stone-50 overflow-hidden relative">
-                        <img src={article.image} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                        <img src={getAssetUrl(article.image)} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                         <span className="absolute bottom-3 left-3 bg-[#111111]/80 text-white font-mono text-[9px] px-2 py-0.5 rounded uppercase">
                           {article.readTime}
                         </span>
@@ -1868,7 +1869,7 @@ export default function App() {
               ].map((grid, index) => (
                 <div key={index} className="bg-white rounded-2xl overflow-hidden border border-stone-100 shadow-sm hover:shadow-md transition-all duration-300">
                   <div className="h-48 relative bg-stone-50">
-                    <img src={grid.img} alt={grid.title} className="w-full h-full object-cover" />
+                    <img src={getAssetUrl(grid.img)} alt={grid.title} className="w-full h-full object-cover" />
                   </div>
                   <div className="p-4 space-y-1">
                     <h4 className="font-serif font-bold text-sm text-[#111111]">{grid.title}</h4>
@@ -1901,7 +1902,7 @@ export default function App() {
 
               <div className="aspect-[4/3] rounded-2xl overflow-hidden relative shadow">
                 <img 
-                  src="/assets/images/makhana_pond_harvest_1781940339830.jpg" 
+                  src={getAssetUrl("/assets/images/makhana_pond_harvest_1781940339830.jpg")} 
                   alt="Harvesting wetlands in Bihar" 
                   className="w-full h-full object-cover"
                 />
@@ -1945,7 +1946,7 @@ export default function App() {
                 {wishlist.map((product) => (
                   <div key={product.id} className="p-3 bg-white border border-stone-100 rounded-2xl flex flex-col justify-between hover:shadow-lg transition-all duration-300">
                     <div className="aspect-square bg-stone-50 rounded-xl overflow-hidden relative cursor-pointer" onClick={() => handleSelectProductFromList(product)}>
-                      <img src={product.images[0]} alt="" className="w-full h-full object-cover" />
+                      <img src={getAssetUrl(product.images[0])} alt="" className="w-full h-full object-cover" />
                     </div>
                     <div className="p-2 space-y-1">
                       <h4 className="font-serif font-bold text-sm text-stone-900 line-clamp-1 truncate">{product.name}</h4>
@@ -2016,7 +2017,7 @@ export default function App() {
                       {cart.map((item, idx) => (
                         <div key={idx} className="flex gap-4 pt-4 first:pt-0 group">
                           <div className="w-16 h-16 bg-stone-50 rounded-xl overflow-hidden border border-stone-100 flex-shrink-0">
-                            <img src={item.product.images[0]} alt="" className="w-full h-full object-cover" />
+                            <img src={getAssetUrl(item.product.images[0])} alt="" className="w-full h-full object-cover" />
                           </div>
                           
                           <div className="flex-grow flex flex-col justify-between">
@@ -2482,7 +2483,7 @@ export default function App() {
                           : 'border-amber-100 bg-stone-50 group-hover:shadow-md group-hover:border-[#2E7D32]/45'
                       }`}>
                         <img
-                          src={cat.image}
+                          src={getAssetUrl(cat.image)}
                           alt={cat.name}
                           className="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500"
                           referrerPolicy="no-referrer"
@@ -2598,7 +2599,7 @@ export default function App() {
                           className="aspect-square bg-stone-50 rounded-2xl overflow-hidden relative cursor-pointer group border border-stone-50/50"
                         >
                           <img
-                            src={card.image}
+                            src={getAssetUrl(card.image)}
                             alt={card.displayName}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                             referrerPolicy="no-referrer"

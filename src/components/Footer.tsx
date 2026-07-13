@@ -8,6 +8,7 @@ import {
   Send, Sparkles, MapPin, Mail, Phone, ShieldCheck, 
   ChevronRight, ArrowUp, MessageCircle
 } from 'lucide-react';
+import { getAssetUrl } from '../utils/assetHelper';
 
 interface FooterProps {
   onNavigate: (view: string) => void;
@@ -43,7 +44,7 @@ export default function Footer({ onNavigate }: FooterProps) {
             <div className="flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-full overflow-hidden shadow border border-stone-800 bg-stone-900">
                 <img 
-                  src="/assets/images/farmingo_nuts_logo_1783843254906.jpg" 
+                  src={getAssetUrl("/assets/images/farmingo_nuts_logo_1783843254906.jpg")} 
                   alt="Farmingo Nuts Logo" 
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
